@@ -1,0 +1,35 @@
+services:
+  blog:
+    container_name: blog
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src/main:/blog/src/main
+    restart: no
+    environment:
+      - SPRING_DATASOURCE_URL=$DB_URL
+      - SPRING_DATASOURCE_USERNAME=$DB_USER
+      - SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - OWNER_NAME=$OWNER_NAME
+      - OWNER_PASSWORD=$OWNER_PASSWORD
+    depends_on:
+      - postgres
+    networks:
+      - blog-net
+
+  postgres:
+    container_name: database
+    image: 'postgres:17'
+    environment:
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+    networks:
+      - blog-net
+
+networks:
+  blog-net:
