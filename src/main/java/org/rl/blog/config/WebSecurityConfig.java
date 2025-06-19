@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,8 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/api/v1/posts", "/api/v1/posts/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/posts")
+                            .hasRole(UserRole.OWNER.toString())
                         .anyRequest().authenticated()
                 )
                 .formLogin(Customizer.withDefaults())

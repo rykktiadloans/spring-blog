@@ -1,22 +1,18 @@
 package org.rl.blog.controllers.api.v1;
 
+import jakarta.validation.Valid;
 import org.rl.blog.model.Post;
 import org.rl.blog.model.PostState;
-import org.rl.blog.model.api_dto.PostDto;
-import org.rl.blog.repositories.PostRepository;
+import org.rl.blog.model.api_dto.PostRequest;
+import org.rl.blog.model.api_dto.PostResponse;
 import org.rl.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.Format;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -26,25 +22,25 @@ public class PostController {
     @Autowired
     PostService postService;
     @GetMapping("")
-    List<PostDto> getPosts(Pageable page) {
+    List<PostResponse> getPosts(Pageable page) {
         return this.postService.getByPage(page).stream()
-                .map(PostDto::fromPost).toList();
+                .map(PostResponse::fromPost).toList();
     }
 
     @GetMapping("/{id}")
-    PostDto getPost(@PathVariable(name = "id") Integer id) {
-        return PostDto.fromPost(this.postService.getById(id));
+    PostResponse getPost(@PathVariable(name = "id") Integer id) {
+        return PostResponse.fromPost(this.postService.getById(id));
     }
 
-    @Profile("dev")
-    @GetMapping("/create")
-    PostDto create() {
+    @PostMapping("")
+    PostResponse postNewPost(@Valid @RequestBody PostRequest postDto) {
         Post post = Post.builder()
-                .title("Title")
-                .content("Blha blah")
-                .creationDate(LocalDateTime.from(Instant.now()))
-                .state(PostState.PUBLISHED)
+                .title(postDto.title())
+                .content(postDto.content())
+                .creationDate(LocalDateTime.now())
+                .state(PostState.DRAFT)
                 .build();
-        return PostDto.fromPost(this.postService.save(post));
+        return PostResponse.fromPost(this.postService.save(post));
+
     }
 }
