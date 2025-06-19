@@ -17,11 +17,11 @@ services:
       - OWNER_NAME=$OWNER_NAME
       - OWNER_PASSWORD=$OWNER_PASSWORD
     depends_on:
-      - postgres
+      - database
     networks:
       - blog-net
 
-  postgres:
+  database:
     container_name: database
     image: 'postgres:17'
     environment:
