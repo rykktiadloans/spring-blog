@@ -1,9 +1,9 @@
 services:
-  blog:
-    container_name: blog
+  api-service:
+    container_name: api-service
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: api-service/Dockerfile
     ports:
       - 8080:8080
     volumes:
