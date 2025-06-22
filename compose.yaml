@@ -1,11 +1,26 @@
 services:
+  frontend-service:
+    container_name: frontend-service
+    build:
+      context: .
+      dockerfile: frontend-service/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src/main:/blog/src/main
+    restart: no
+    depends_on:
+      - api-service
+    networks:
+      - blog-net
+
   api-service:
     container_name: api-service
     build:
       context: .
       dockerfile: api-service/Dockerfile
     ports:
-      - 8080:8080
+      - 8081:8080
     volumes:
       - ./src/main:/blog/src/main
     restart: no
