@@ -2,6 +2,8 @@ package org.rl.apiService.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.rl.shared.model.responses.PostResponse;
+import org.rl.shared.model.PostState;
 
 import java.time.LocalDateTime;
 
@@ -31,4 +33,9 @@ public class Post {
     @Column(name = "state", nullable = false)
     private PostState state;
 
+    public PostResponse toResponse() {
+        return new PostResponse(
+                this.getId(), this.getTitle(), this.getContent(),
+                this.getCreationDate(), this.getState());
+    }
 }

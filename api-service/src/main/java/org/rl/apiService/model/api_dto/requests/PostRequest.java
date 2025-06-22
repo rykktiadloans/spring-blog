@@ -1,4 +1,4 @@
-package org.rl.apiService.model.api_dto;
+package org.rl.apiService.model.api_dto.requests;
 
 import jakarta.validation.constraints.NotBlank;
 

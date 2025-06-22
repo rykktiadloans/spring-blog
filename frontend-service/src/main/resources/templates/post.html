@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Post: ' + ${post.title}"></title>
+</head>
+<body>
+    <h3 th:text="|ID: ${{post.id}}|"></h3>
+    <h4 th:text="${{post.creationDate}}"></h4>
+    <p th:text="${post.content}"></p>
+
+
+</body>
+</html>

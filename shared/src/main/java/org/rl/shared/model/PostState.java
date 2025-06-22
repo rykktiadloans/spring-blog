@@ -1,4 +1,4 @@
-package org.rl.apiService.model;
+package org.rl.shared.model;
 
 public enum PostState {
     DRAFT("draft"),
