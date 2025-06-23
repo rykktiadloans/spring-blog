@@ -1,2 +1,2 @@
-(./gradlew -t :api-service:bootJar) &
+(./gradlew -t --continuous :api-service:bootJar) &
 ./gradlew api-service:bootRun -PskipDownload=true

@@ -2,6 +2,10 @@ spring:
   application:
     name: api-service
   devtools:
+    restart:
+      enabled: true
+      additional-paths:
+        - .
     livereload:
       enabled: true
   datasource:

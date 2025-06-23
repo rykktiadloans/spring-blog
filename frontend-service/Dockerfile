@@ -7,6 +7,6 @@ COPY .. /wd
 EXPOSE 8080
 
 RUN chmod +x frontend-service/start.sh
-RUN ./gradlew getDeps
+RUN ./gradlew frontend-service:getDeps
 
 CMD ["sh", "frontend-service/start.sh"]

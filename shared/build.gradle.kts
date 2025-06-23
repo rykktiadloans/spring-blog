@@ -1,3 +1,4 @@
+
 plugins {
 	id("java-conventions")
 }
@@ -16,6 +17,7 @@ repositories {
 
 dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 tasks.withType<Test> {
 	useJUnitPlatform()

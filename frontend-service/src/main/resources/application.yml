@@ -2,6 +2,10 @@ spring:
   application:
     name: frontend-service
   devtools:
+    restart:
+      enabled: true
+      additional-paths:
+        - .
     livereload:
       enabled: true
 
