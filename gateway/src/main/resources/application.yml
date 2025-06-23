@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: gateway
+  devtools:
+    restart:
+      enabled: true
+      additional-paths:
+        - .
+    livereload:
+      enabled: true
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: api_route
+              uri: ${API_URL}
+              predicates:
+                - Path=/api/v1/**
+            - id: frontend_home_route
+              uri: ${FRONTEND_URL}
+              predicates:
+                - Path=/
+
+server:
+  port: 8080
+
+services:
+  api: ${API_URL}
+  frontend: ${FRONTEND_URL}

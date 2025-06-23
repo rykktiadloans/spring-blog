@@ -1,11 +1,32 @@
 services:
+  gateway:
+    container_name: gateway
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - ./gateway/src/main:/wd/gateway/src/main
+      - ./shared/src/main:/wd/shared/src/main
+      - ./target:/wd/target
+    restart: no
+    environment:
+      - API_URL=http://api-service:8081
+      - FRONTEND_URL=http://frontend-service:8082
+    depends_on:
+      - frontend-service
+      - api-service
+    networks:
+      - blog-net
+
   frontend-service:
     container_name: frontend-service
     build:
       context: .
       dockerfile: frontend-service/Dockerfile
     ports:
-      - 8080:8080
+      - 8082:8082
     volumes:
       - ./frontend-service/src/main:/wd/frontend-service/src/main
       - ./shared/src/main:/wd/shared/src/main
