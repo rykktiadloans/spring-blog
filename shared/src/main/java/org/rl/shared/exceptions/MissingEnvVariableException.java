@@ -1,4 +1,4 @@
-package org.rl.apiService.exceptions;
+package org.rl.shared.exceptions;
 
 public class MissingEnvVariableException extends RuntimeException {
     public MissingEnvVariableException() {}

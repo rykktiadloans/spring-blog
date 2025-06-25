@@ -1,4 +1,4 @@
-package org.rl.apiService.exceptions;
+package org.rl.shared.exceptions;
 
 public class MissingEntityException extends RuntimeException {
     public MissingEntityException() {}

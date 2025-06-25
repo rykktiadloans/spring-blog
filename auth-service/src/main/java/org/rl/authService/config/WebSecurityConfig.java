@@ -1,15 +1,18 @@
-package org.rl.apiService.config;
+package org.rl.authService.config;
 
-import org.rl.apiService.exceptions.MissingEnvVariableException;
-import org.rl.apiService.model.UserRole;
+import org.rl.shared.exceptions.MissingEnvVariableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,17 +26,32 @@ public class WebSecurityConfig {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private JwtEntryPoint jwtEntryPoint;
+
+    @Bean
+    public JwtTokenFilter jwtTokenFilter() {
+        return new JwtTokenFilter();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/api/v1/posts", "/api/v1/posts/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/posts")
-                            .hasRole(UserRole.OWNER.toString())
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .logout((logout) -> logout.permitAll());
+                .httpBasic(Customizer.withDefaults())
+                .exceptionHandling(handling ->
+                        handling.authenticationEntryPoint(jwtEntryPoint))
+                .sessionManagement(management ->
+                        management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(Customizer.withDefaults());
 
         return http.build();
     }
@@ -53,7 +71,7 @@ public class WebSecurityConfig {
         UserDetails user = User
                 .withUsername(ownerName)
                 .password(passwordEncoder().encode(ownerPassword))
-                .roles(UserRole.OWNER.toString())
+                .roles("OWNER")
                 .build();
         return new InMemoryUserDetailsManager(user);
     }

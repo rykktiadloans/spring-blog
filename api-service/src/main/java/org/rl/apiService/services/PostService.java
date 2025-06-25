@@ -1,6 +1,6 @@
 package org.rl.apiService.services;
 
-import org.rl.apiService.exceptions.MissingEntityException;
+import org.rl.shared.exceptions.MissingEntityException;
 import org.rl.apiService.model.Post;
 import org.rl.apiService.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;

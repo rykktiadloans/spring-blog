@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gateway
+    name: auth-service
   devtools:
     restart:
       enabled: true
@@ -9,14 +9,13 @@ spring:
     livereload:
       enabled: true
 
-server:
-  port: 8080
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
 logging:
   level:
     root: DEBUG
 
-services:
-  api: ${API_URL}
-  frontend: ${FRONTEND_URL}
-  auth: ${AUTH_URL}
+server:
+  port: 8083

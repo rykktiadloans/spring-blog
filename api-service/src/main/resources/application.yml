@@ -15,5 +15,9 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
+logging:
+  level:
+    root: DEBUG
+
 server:
   port: 8081

@@ -14,6 +14,7 @@ services:
     environment:
       - API_URL=http://api-service:8081
       - FRONTEND_URL=http://frontend-service:8082
+      - AUTH_URL=http://auth-service:8083
     depends_on:
       - frontend-service
       - api-service
@@ -56,10 +57,28 @@ services:
       - SPRING_DATASOURCE_USERNAME=$DB_USER
       - SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - OWNER_NAME=$OWNER_NAME
-      - OWNER_PASSWORD=$OWNER_PASSWORD
     depends_on:
       - database
+    networks:
+      - blog-net
+
+  auth-service:
+    container_name: auth-service
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    ports:
+      - 8083:8083
+    volumes:
+      - ./auth-service/src/main:/wd/auth-service/src/main
+      - ./shared/src/main:/wd/shared/src/main
+      - ./target:/wd/target
+    restart: no
+    environment:
+      - OWNER_NAME=$OWNER_NAME
+      - OWNER_PASSWORD=$OWNER_PASSWORD
+      - JWT_SECRET=$JWT_SECRET
+      - JWT_EXPIRATION=$JWT_EXPIRATION
     networks:
       - blog-net
 
