@@ -36,6 +36,29 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+tasks.register<Copy>("processFrontendResources") {
+	// Directory containing the artifacts produced by the frontend project
+	val frontendProjectDir = project(":frontend").layout.projectDirectory
+	val frontendBuildDir = frontendProjectDir.dir("dist/")
+	// Directory where the frontend artifacts must be copied to be packaged alltogether with the backend by the 'war'
+	// plugin.
+	val frontendResourcesDir = project.layout.buildDirectory.dir("resources/main/static/")
+
+	println("static exists: " + frontendResourcesDir.get().asFile.exists())
+	println("dist exists: " + frontendBuildDir.asFile.exists())
+
+	group = "Frontend"
+	description = "Process frontend resources"
+	dependsOn(":frontend:assembleFrontend")
+
+	from(frontendBuildDir)
+	into(frontendResourcesDir)
+}
+
+tasks.named<Task>("compileJava") {
+	dependsOn("processFrontendResources")
+}
+
 tasks.register<Copy>("getDeps") {
 	from(sourceSets.main.get().runtimeClasspath)
 	into("runtime/")

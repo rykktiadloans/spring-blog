@@ -15,10 +15,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/posts/{id}")
     public String getPostById(@PathVariable(name = "id") Integer id, Model model) {
-        PostResponse postResponse = this.postService.getPostById(id);
-        model.addAttribute("post", postResponse);
-        return "post";
+        return "forward:/index.html";
     }
+
+    @GetMapping("/posts")
+    public String getPosts() {
+        return "forward:/index.html";
+    }
+
 }
