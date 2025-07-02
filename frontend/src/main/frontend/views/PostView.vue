@@ -6,6 +6,7 @@ import type { Ref } from "vue";
 import { useRepositoriesStore } from "../stores/repositories.store";
 import { onMounted } from "vue";
 import Loading from "../components/Loading.vue";
+import PostComponent from "../components/PostComponent.vue";
 
 const route = useRoute();
 if (route.params.id instanceof Array) {
@@ -27,14 +28,6 @@ onMounted(async () => {
 <template>
   <main>
     <Loading v-if="post == null"/>
-    <template v-else>
-      <h1>{{post.title}}</h1>
-      <b>{{post.creationDate}}</b>
-      <article>
-        <p>
-          {{post.content}}
-        </p>
-      </article>
-    </template>
+    <PostComponent v-else :post="post" />
   </main>
 </template>

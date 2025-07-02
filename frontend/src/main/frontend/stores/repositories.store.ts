@@ -7,23 +7,12 @@ import { onMounted, ref, watch, type Ref } from "vue";
 
 export const useRepositoriesStore = defineStore("repositories", () => {
   const postRepository: Ref<PostRepository> = ref(new PostRepository());
-  const csrf: Ref<string> = ref("");
   const jwtToken: Ref<string | null> = ref(null);
   const user: Ref<User | null> = ref(null);
 
-  onMounted(async () => {
-    csrf.value = await fetch("/api/v1/auth/csrf")
-      .then((response) => response.json())
-      .then((json) => (csrf.value = json.token))
-      .catch((error) => console.log(error));
-  });
 
   watch(jwtToken, (newValue) => {
     postRepository.value.jwtToken = newValue;
-  });
-
-  watch(csrf, (newCsrf) => {
-    postRepository.value.csrf = newCsrf;
   });
 
   let login = async (credentials: UserCredentials): Promise<User | null> => {
@@ -31,7 +20,6 @@ export const useRepositoriesStore = defineStore("repositories", () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEn": csrf.value,
       },
       body: JSON.stringify(credentials),
     })
@@ -58,6 +46,6 @@ export const useRepositoriesStore = defineStore("repositories", () => {
     return user.value;
   };
 
-  return { postRepository, csrf, jwtToken, user, login};
+  return { postRepository, jwtToken, user, login};
 });
 

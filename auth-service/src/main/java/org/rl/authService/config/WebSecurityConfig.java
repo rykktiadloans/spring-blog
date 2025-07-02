@@ -43,6 +43,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/api/v1/auth/validate").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -51,7 +52,7 @@ public class WebSecurityConfig {
                         handling.authenticationEntryPoint(jwtEntryPoint))
                 .sessionManagement(management ->
                         management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(Customizer.withDefaults());
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }

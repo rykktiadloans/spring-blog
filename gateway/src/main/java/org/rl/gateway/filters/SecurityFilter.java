@@ -3,6 +3,8 @@ package org.rl.gateway.filters;
 import io.micrometer.core.ipc.http.HttpSender;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rl.gateway.clients.AuthClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -22,11 +24,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
 @Component
-@Slf4j
 public class SecurityFilter implements GatewayFilter {
     @Autowired
     @Lazy
     private AuthClient authClient;
+    private final Logger logger = LogManager.getLogger(SecurityFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -40,6 +42,7 @@ public class SecurityFilter implements GatewayFilter {
         }
         return this.authClient.validate(authHeader.substring(7))
                 .flatMap(res -> {
+                    logger.debug("RES: " + res);
                     if(!res) {
                         exchange.getResponse()
                                 .setStatusCode(HttpStatus.UNAUTHORIZED);

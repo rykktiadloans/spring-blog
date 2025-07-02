@@ -2,18 +2,13 @@ import { Post } from "../model/post";
 
 export default class PostRepository {
   jwtToken: string | null;
-  csrf: string | null;
 
   constructor(jwtToken?: string, csrf?: string) {
-    if(jwtToken == null) {
+    if (jwtToken == null) {
       this.jwtToken = null;
     }
     this.jwtToken = jwtToken!;
 
-    if(csrf == null) {
-      this.csrf = null;
-    }
-    this.csrf = csrf!;
   }
 
   async fetchPostById(id: number): Promise<Post> {
@@ -21,7 +16,7 @@ export default class PostRepository {
       .then((response) => response.json())
       .then((json) => Post.deserialize(json))
       .catch((error) => console.log(error));
-    if(post == null) {
+    if (post == null) {
       throw new Error(`Post with ID ${id} could not be fetched`);
     }
     return post;
@@ -33,16 +28,23 @@ export default class PostRepository {
       .then((json) => json.map((el: any) => Post.deserialize(el)))
       .catch((error) => console.log(error));
     return posts;
-
   }
 
-  sendPost(post: Post): Post {
+  async sendPost(post: Post): Promise<Post> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");
     }
-    if (this.csrf == null) {
-      throw new Error("No CSRF token has been provided");
-    }
-    return post;
+    let newPost = await fetch("/api/v1/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.jwtToken}`
+      },
+      body: JSON.stringify(post),
+    }).then((response) => {
+      return response.json();
+    })
+     .then((json) => Post.deserialize(json));
+    return newPost;
   }
 }
