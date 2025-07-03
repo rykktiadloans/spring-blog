@@ -51,7 +51,7 @@ public class GatewayConfig {
                         .and()
                         .method(HttpMethod.GET)
                         .uri(apiUrl))
-                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico")
+                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/**")
                         .uri(frontendUrl))
                 .build();
     }

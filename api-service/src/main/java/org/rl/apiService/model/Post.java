@@ -6,6 +6,7 @@ import org.rl.shared.model.responses.PostResponse;
 import org.rl.shared.model.PostState;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -32,6 +33,9 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private PostState state;
+
+    @OneToMany(mappedBy = "post")
+    private List<Resource> resources;
 
     public PostResponse toResponse() {
         return new PostResponse(
