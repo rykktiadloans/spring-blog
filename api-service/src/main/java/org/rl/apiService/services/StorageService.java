@@ -2,6 +2,7 @@ package org.rl.apiService.services;
 
 import jakarta.annotation.PostConstruct;
 import org.rl.apiService.configuration.StorageConfiguration;
+import org.rl.apiService.model.Resource;
 import org.rl.shared.exceptions.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,22 +29,21 @@ public class StorageService {
         }
     }
 
-    public void store(MultipartFile file) {
+    public Resource store(MultipartFile file) {
         try {
             if(file.isEmpty()) {
                 throw new StorageException("File is empty");
             }
             Path dir = Paths.get(this.storageConfiguration.getLocation());
             Path destinationPath = dir.resolve(
-                    Paths.get(file.getOriginalFilename())
-                            .normalize()
-                            .toAbsolutePath());
+                    Paths.get(file.getOriginalFilename()));
             if (!destinationPath.getParent().equals(dir)) {
-                throw new StorageException("Attempted to save a file outside of its current directory");
+                throw new StorageException(String.format("Attempted to save a file outside of its current directory: `%s`", destinationPath));
             }
             try (InputStream stream = file.getInputStream()) {
                 Files.copy(stream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
             }
+            return Resource.builder().name(file.getOriginalFilename()).build();
         }
         catch (IOException e) {
             throw new StorageException(e);
@@ -55,4 +55,9 @@ public class StorageService {
         Path destinationPath = dir.resolve(filename);
         return destinationPath.toFile();
     }
+
+    public File getFile(Resource resource) {
+        return getFile(resource.getName());
+    }
+
 }

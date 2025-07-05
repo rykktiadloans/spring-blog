@@ -34,9 +34,6 @@ public class Post {
     @Column(name = "state", nullable = false)
     private PostState state;
 
-    @OneToMany(mappedBy = "post")
-    private List<Resource> resources;
-
     public PostResponse toResponse() {
         return new PostResponse(
                 this.getId(), this.getTitle(), this.getContent(),

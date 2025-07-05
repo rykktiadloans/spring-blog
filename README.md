@@ -12,3 +12,4 @@
 - [ ] Proper styling
 - [ ] Migrate to Kubernetes
 - [ ] Add OpenAPI
+- [ ] Add RSS
