@@ -1,8 +1,9 @@
 # Spring-based Blog Application
 
 ## To-do list
+- [x] Add centralized exception handlers
 - [ ] Implement draft support
-- [ ] Add centralized exception handlers
+- [ ] Add proper image support
 - [ ] Add general purpose file storage system
 - [ ] Add tests
 - [ ] Add Javadoc
