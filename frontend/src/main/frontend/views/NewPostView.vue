@@ -9,6 +9,14 @@ import PostComponent from "../components/PostComponent.vue";
 import { computed } from "vue";
 import { onMounted } from "vue";
 import StatusCodes from "../model/statusCodes";
+import { useFileDialog } from "@vueuse/core";
+import { templateRef } from "@vueuse/core";
+import { useTemplateRef } from "vue";
+
+const router = useRouter();
+const route = useRoute();
+const repositories = useRepositoriesStore();
+const resourceRepository = repositories.resourceRepository;
 
 function getAllImages(content: string): string[] {
   const images: string[] = [];
@@ -23,21 +31,15 @@ function getAllImages(content: string): string[] {
 }
 
 async function validateImage(imageUrl: string): Promise<boolean> {
-  const response = await fetch(imageUrl);
-  if (!response.ok) {
-    return false;
-  }
-  return true;
+  const r = await resourceRepository.checkResourceExistsByName(imageUrl);
+  console.log(r);
+  return r;
 }
 
 function getImageName(imageUrl: string): string {
   const pos = imageUrl.lastIndexOf("/");
   return imageUrl.slice(pos + 1);
 }
-
-const router = useRouter();
-const route = useRoute();
-const repositories = useRepositoriesStore();
 
 if (repositories.user == null) {
   router.push("/");
@@ -47,6 +49,7 @@ const id = ref(0);
 const title = ref("");
 const content = ref("");
 const badImages: Ref<string[]> = ref([]);
+const fileInput = useTemplateRef("fileInput");
 
 onMounted(async () => {
   if (typeof route.query["post"] == "string") {
@@ -63,7 +66,35 @@ const post = computed(
 
 const validateImages = async () => {
   const images = getAllImages(content.value);
-  badImages.value = images.filter((image) => validateImage(image));
+  badImages.value = [];
+  for(const image of images) {
+    if(!(await validateImage(image))) {
+      badImages.value.push(image);
+    }
+  }
+};
+
+const onUploadClick = async (imageName: string) => {
+  const input = fileInput.value;
+  if (input == null) {
+    return;
+  }
+  input.onchange = () => {
+    const files = input.files;
+    if (files == null) {
+      throw new Error("No files selected");
+    }
+    if (files[0].name != imageName.split("/").pop()) {
+      throw new Error(`Wrong filename. ${imageName} is needed, while ${files[0].name} is supplied`);
+    }
+    const name = imageName.split("/").pop();
+    if(name == undefined) {
+      return;
+    }
+    console.log(files[0]);
+    resourceRepository.postImage(files[0]);
+  };
+  input.click();
 };
 
 const onPublishClick = async () => {
@@ -95,8 +126,10 @@ const onDraftClick = async () => {
 
       <PostComponent :post="post" />
 
+      <input type="file" ref="fileInput" style="display: none" />
       <div v-for="image in badImages" :key="image">
         <p>Image "{{ getImageName(image) }}" does not exist.</p>
+        <button @click.prevent="onUploadClick(image)">Upload</button>
       </div>
       <p v-if="badImages.length != 0">
         Remember: an image can be accessed with "/resources/{image name}"

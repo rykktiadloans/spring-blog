@@ -4,14 +4,17 @@ import { type UserCredentials } from "../repositories/JwtRepository";
 import { PostRepository } from "../repositories/PostRepository";
 import { defineStore } from "pinia";
 import { onMounted, ref, watch, type Ref } from "vue";
+import { ResourceRepository } from "../repositories/ResourceRepository";
 
 export const useRepositoriesStore = defineStore("repositories", () => {
   const postRepository = ref(new PostRepository());
+  const resourceRepository = ref(new ResourceRepository());
   const jwtToken: Ref<string | null> = ref(null);
   const user: Ref<User | null> = ref(null);
 
   watch(jwtToken, (newValue) => {
     postRepository.value.jwtToken = newValue;
+    resourceRepository.value.jwtToken = newValue;
   });
 
   let login = async (credentials: UserCredentials): Promise<User | null> => {
@@ -45,5 +48,5 @@ export const useRepositoriesStore = defineStore("repositories", () => {
     return user.value;
   };
 
-  return { postRepository, jwtToken, user, login };
+  return { postRepository, resourceRepository, jwtToken, user, login };
 });
