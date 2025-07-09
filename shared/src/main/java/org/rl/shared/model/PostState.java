@@ -1,8 +1,8 @@
 package org.rl.shared.model;
 
 public enum PostState {
-    DRAFT("draft"),
-    PUBLISHED("published");
+    DRAFT("DRAFT"),
+    PUBLISHED("PUBLISHED");
 
     private final String state;
 

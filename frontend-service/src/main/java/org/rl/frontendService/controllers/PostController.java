@@ -3,12 +3,14 @@ package org.rl.frontendService.controllers;
 import org.bouncycastle.math.raw.Mod;
 import org.rl.frontendService.clients.ApiClient;
 import org.rl.frontendService.services.PostService;
+import org.rl.shared.model.PostState;
 import org.rl.shared.model.responses.PostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PostController {
@@ -24,5 +26,6 @@ public class PostController {
     public String getPosts() {
         return "forward:/index.html";
     }
+
 
 }

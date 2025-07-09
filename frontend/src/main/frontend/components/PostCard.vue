@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { Post } from "../model/post";
+import { type PostState, Post } from "../model/post";
 
 const props = defineProps<{
   post: Post;
@@ -15,7 +15,7 @@ const click = () => {
 
 <template>
   <div @click="click">
-    <h3>{{post.title}}</h3>
+    <h3>{{post.state == "DRAFT" ? "DRAFT: " : ""}}{{post.title}}</h3>
     <p>{{post.content.slice(0, 50)}}...</p>
     <p>
       <b>{{post.creationDate.toDateString()}}</b>

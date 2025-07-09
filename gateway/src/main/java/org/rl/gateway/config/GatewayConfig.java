@@ -44,7 +44,7 @@ public class GatewayConfig {
                         .uri(authUrl))
                 .route(route -> route.path("/api/v1/posts", "/api/v1/posts/**", "/api/v1/resources", "/api/v1/resources/**")
                         .and()
-                        .method(HttpMethod.POST)
+                        .method(HttpMethod.POST, HttpMethod.PUT)
                         .filters(filter -> filter.filter(securityFilter))
                         .uri(apiUrl))
                 .route(route -> route.path("/api/v1/posts", "/api/v1/posts/**", "/api/v1/resources", "/api/v1/resources/**")

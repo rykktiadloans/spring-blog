@@ -9,7 +9,7 @@ const store = useRepositoriesStore();
 const postRepository = store.postRepository;
 
 const posts: Ref<Post[]> = ref([]);
-const page = ref(1);
+const page = ref(0);
 const isProcessing = ref(true);
 
 onMounted(async () => {
