@@ -51,6 +51,13 @@ public class GatewayConfig {
                         .and()
                         .method(HttpMethod.GET)
                         .uri(apiUrl))
+                .route(route -> route.path("/resources/**")
+                        .and()
+                        .method(HttpMethod.GET, HttpMethod.TRACE, HttpMethod.HEAD)
+                        .filters(filter -> filter
+                                .prefixPath("/api/v1")
+                        )
+                        .uri(apiUrl))
                 .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/**")
                         .uri(frontendUrl))
                 .build();

@@ -1,15 +1,14 @@
 import StatusCodes from "../model/statusCodes";
 import { User, UserRole } from "../model/user";
 import { type UserCredentials } from "../repositories/JwtRepository";
-import PostRepository from "../repositories/PostRepository";
+import { PostRepository } from "../repositories/PostRepository";
 import { defineStore } from "pinia";
 import { onMounted, ref, watch, type Ref } from "vue";
 
 export const useRepositoriesStore = defineStore("repositories", () => {
-  const postRepository: Ref<PostRepository> = ref(new PostRepository());
+  const postRepository = ref(new PostRepository());
   const jwtToken: Ref<string | null> = ref(null);
   const user: Ref<User | null> = ref(null);
-
 
   watch(jwtToken, (newValue) => {
     postRepository.value.jwtToken = newValue;
@@ -46,6 +45,5 @@ export const useRepositoriesStore = defineStore("repositories", () => {
     return user.value;
   };
 
-  return { postRepository, jwtToken, user, login};
+  return { postRepository, jwtToken, user, login };
 });
-

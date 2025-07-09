@@ -1,7 +1,7 @@
 import { Post } from "../model/post";
 import StatusCodes from "../model/statusCodes";
 
-export default class PostRepository {
+export class PostRepository {
   jwtToken: string | null;
 
   constructor(jwtToken?: string, csrf?: string) {

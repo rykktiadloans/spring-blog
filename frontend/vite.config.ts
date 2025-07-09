@@ -17,7 +17,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://127.0.0.1:8080",
-        secure: false
+        secure: false,
       },
 
     },

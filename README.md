@@ -4,9 +4,9 @@
 - [x] Ability to post images
 - [x] Add centralized exception handlers
 - [x] Implement draft support
+- [x] Add proper image support
 - [ ] Add proper pagination to Vue
 - [ ] Refactor Vue a bit
-- [ ] Add proper image support
 - [ ] Image presence verification
 - [ ] Add general purpose file storage system
 - [ ] Add tests

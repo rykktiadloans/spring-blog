@@ -5,14 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(name = "/owner")
 public class OwnerController {
-    @GetMapping("/login")
+    @GetMapping("/owner/login")
     public String getLogin() {
         return "forward:/index.html";
     }
 
-    @GetMapping("/newpost")
+    @GetMapping("/owner/newpost")
     public String getNewPost() {
         return "forward:/index.html";
     }
