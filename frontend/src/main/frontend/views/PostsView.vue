@@ -26,7 +26,6 @@ let pushNewPosts = async () => {
   if (tempPosts.length < 20) {
     stopLoading.value = true;
   }
-  console.log(`Page ${page.value}`);
 };
 
 onMounted(async () => {
@@ -47,8 +46,8 @@ const { reset } = useInfiniteScroll(
 
 <template>
   <main ref="postList" >
-    <div>
-      <PostCard v-for="post in posts" :key="post.id" :post="post" />
+    <div class="post-card-container">
+      <PostCard class="post-card" v-for="post in posts" :key="post.id" :post="post" />
     </div>
     <Loading v-if="isProcessing" />
   </main>
@@ -58,5 +57,11 @@ const { reset } = useInfiniteScroll(
 main {
   height: 400px;
   overflow-y: auto;
+}
+
+
+.post-card {
+  border-top: 2px solid black;
+
 }
 </style>

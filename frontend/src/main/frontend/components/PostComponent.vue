@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Post } from "../model/post";
 import PostContent from "./PostContent.vue";
+import { printDate } from "../model/formatDate";
 
 const props = defineProps<{ post: Post }>();
 
@@ -9,7 +10,7 @@ const props = defineProps<{ post: Post }>();
 <template>
   <div>
       <h1>{{post.title}}</h1>
-      <b>{{post.creationDate}}</b>
+      <b>{{printDate(post.creationDate)}}</b>
       <article>
         <PostContent :content="post.content"/>
       </article>

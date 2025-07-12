@@ -32,7 +32,6 @@ function getAllImages(content: string): string[] {
 
 async function validateImage(imageUrl: string): Promise<boolean> {
   const r = await resourceRepository.checkResourceExistsByName(imageUrl);
-  console.log(r);
   return r;
 }
 
@@ -46,8 +45,12 @@ if (repositories.user == null) {
 }
 
 const id = ref(0);
-const title = ref("");
-const content = ref("");
+const title = ref("Sample title");
+const content = ref(`
+*Lorem ipsum* and so on.
+
+As you can see, this thing supports Markdown.
+`);
 const badImages: Ref<string[]> = ref([]);
 const fileInput = useTemplateRef("fileInput");
 
@@ -67,8 +70,8 @@ const post = computed(
 const validateImages = async () => {
   const images = getAllImages(content.value);
   badImages.value = [];
-  for(const image of images) {
-    if(!(await validateImage(image))) {
+  for (const image of images) {
+    if (!(await validateImage(image))) {
       badImages.value.push(image);
     }
   }
@@ -88,10 +91,9 @@ const onUploadClick = async (imageName: string) => {
       throw new Error(`Wrong filename. ${imageName} is needed, while ${files[0].name} is supplied`);
     }
     const name = imageName.split("/").pop();
-    if(name == undefined) {
+    if (name == undefined) {
       return;
     }
-    console.log(files[0]);
     resourceRepository.postImage(files[0]);
   };
   input.click();
@@ -118,26 +120,77 @@ const onDraftClick = async () => {
 
 <template>
   <main>
-    <form action="/api/v1/posts" method="post">
-      <label for="title">Title</label>
-      <input v-model="title" type="text" name="title" id="title" />
-      <label for="content">Content</label>
-      <textarea v-model="content" name="content" id="content"> </textarea>
-
-      <PostComponent :post="post" />
-
-      <input type="file" ref="fileInput" style="display: none" />
-      <div v-for="image in badImages" :key="image">
-        <p>Image "{{ getImageName(image) }}" does not exist.</p>
-        <button @click.prevent="onUploadClick(image)">Upload</button>
+    <form class="form" action="/api/v1/posts" method="post">
+      <div class="form-item">
+        <label for="title">Title</label>
+        <input v-model="title" type="text" name="title" id="title" />
       </div>
-      <p v-if="badImages.length != 0">
+      <div class="form-item">
+        <label for="content">Content</label>
+        <textarea v-model="content" rows="10" name="content" id="content"> </textarea>
+      </div>
+
+
+      <div class="bad-image-container">
+        <div class="bad-image" v-for="image in badImages" :key="image">
+          <p>Image "{{ getImageName(image) }}" does not exist.</p>
+          <button @click.prevent="onUploadClick(image)">Upload</button>
+        </div>
+      </div>
+      <div class="bad-image-help" v-if="badImages.length != 0">
         Remember: an image can be accessed with "/resources/{image name}"
-      </p>
+      </div>
 
       <button @click.prevent="validateImages">Validate images</button>
       <input type="submit" value="Publish" @click.prevent="onPublishClick" />
       <input type="submit" value="Save/Move to Draft" @click.prevent="onDraftClick" />
+
+
+      <input type="file" ref="fileInput" style="display: none" />
     </form>
+    <PostComponent class="content" :post="post" />
   </main>
 </template>
+
+<style scoped>
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "form content";
+  column-gap: 15px;
+}
+
+.form, .content {
+  border: 2px solid black;
+  padding: 0.5em;
+}
+
+.content {
+  overflow-y: scroll;
+}
+
+.form, .bad-image-container {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 1em;
+}
+
+.form-item {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.bad-image {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding: 0.5em;
+}
+
+.bad-image-help {
+  border: 2px solid red;
+  border-radius: 15px;
+  padding: 0.5em;
+}
+
+</style>

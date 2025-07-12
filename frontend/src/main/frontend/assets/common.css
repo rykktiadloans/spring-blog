@@ -1,0 +1,16 @@
+:root {
+  --title: "Owner";
+  --header-bg: #131313;
+  --header-fg: #ffffff;
+  --link-fg: #00cc66;
+  --link-fg-hover: #00ee77;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
