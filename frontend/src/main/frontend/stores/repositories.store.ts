@@ -1,6 +1,5 @@
 import StatusCodes from "../model/statusCodes";
-import { User, UserRole } from "../model/user";
-import { type UserCredentials } from "../repositories/JwtRepository";
+import { User, UserRole, type UserCredentials } from "../model/user";
 import { PostRepository } from "../repositories/PostRepository";
 import { defineStore } from "pinia";
 import { onMounted, ref, watch, type Ref } from "vue";

@@ -4,6 +4,11 @@ export const enum UserRole {
 
 }
 
+export interface UserCredentials {
+  username: string;
+  password: string;
+}
+
 export class User {
   username: string;
   password: string;

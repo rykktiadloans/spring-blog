@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 import { useRepositoriesStore } from "../stores/repositories.store";
-import type { UserCredentials } from "../repositories/JwtRepository";
 import { useRouter } from "vue-router";
+import type { UserCredentials } from "../model/user";
 
 const repositories = useRepositoriesStore();
 const router = useRouter();

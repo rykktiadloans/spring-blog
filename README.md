@@ -8,12 +8,14 @@
 - [x] Image presence verification
 - [x] Add proper pagination to Vue
 - [ ] Refactor Vue a bit
-- [ ] Add general purpose file storage system
+- [ ] Proper structuring
 - [ ] Add tests
+- [ ] Migrate to Kubernetes
+- [ ] Add a CI/CD pipeline
 - [ ] Add Javadoc
 - [ ] Add JSDoc
 - [ ] Proper styling
-- [ ] Migrate to Kubernetes
+- [ ] Add general purpose file storage system
 - [ ] Add OpenAPI
 - [ ] Add RSS
 - [ ] Add comments
