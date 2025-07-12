@@ -5,9 +5,9 @@
 - [x] Add centralized exception handlers
 - [x] Implement draft support
 - [x] Add proper image support
-- [ ] Add proper pagination to Vue
+- [x] Image presence verification
+- [x] Add proper pagination to Vue
 - [ ] Refactor Vue a bit
-- [ ] Image presence verification
 - [ ] Add general purpose file storage system
 - [ ] Add tests
 - [ ] Add Javadoc
@@ -16,3 +16,4 @@
 - [ ] Migrate to Kubernetes
 - [ ] Add OpenAPI
 - [ ] Add RSS
+- [ ] Add comments
