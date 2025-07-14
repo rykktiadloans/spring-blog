@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 
+/**
+ * A service concerned with storing files in permanent storage
+ */
 @Service
 public class StorageService {
     @Autowired
@@ -29,6 +32,12 @@ public class StorageService {
         }
     }
 
+    /**
+     * Save the file to the hard drive and create a transient resource object based on it
+     * @param file File to save
+     * @throws StorageException Throws if file is empty, file is attempted to save outside of the proper directory or other IO-related issues
+     * @return Corresponding transient resource object
+     */
     public Resource store(MultipartFile file) {
         try {
             if(file.isEmpty()) {
@@ -50,12 +59,22 @@ public class StorageService {
         }
     }
 
+    /**
+     * Return the file with the specified name
+     * @param filename Name of the file to get
+     * @return Corresponding file
+     */
     public File getFile(String filename) {
         Path dir = Paths.get(this.storageConfiguration.getLocation());
         Path destinationPath = dir.resolve(filename);
         return destinationPath.toFile();
     }
 
+    /**
+     * Get the file corresponding to the specified resource
+     * @param resource Corresponding resource
+     * @return File
+     */
     public File getFile(Resource resource) {
         return getFile(resource.getName());
     }

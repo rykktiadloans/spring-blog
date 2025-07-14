@@ -15,6 +15,9 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+/**
+ * Service responsible for implementing logic relating to validating and generating JWT tokens
+ */
 @Service
 public class JwtService {
     @Value("${jwt.secret}")
@@ -27,10 +30,15 @@ public class JwtService {
     private final Logger logger = LogManager.getLogger(JwtService.class);
 
     @PostConstruct
-    public void init() {
+    private void init() {
         this.key = Keys.hmacShaKeyFor(this.jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Generate a new token for the user
+     * @param username User's username
+     * @return New JWT token
+     */
     public String generateToken(String username) {
         return Jwts.builder()
                 .subject(username)
@@ -40,6 +48,11 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * Extract the username from JWT token
+     * @param token JWT token
+     * @return Username
+     */
     public String getUsernameFromToken(String token) {
         return Jwts.parser()
                 .verifyWith(key).build()
@@ -48,6 +61,11 @@ public class JwtService {
                 .getSubject();
     }
 
+    /**
+     * Validate the token
+     * @param token JWT token to avlidate
+     * @return True if the JWT token is valid, false otherwise.
+     */
     public boolean validateJwtToken(String token) {
         this.logger.debug("AuthService: " + token);
         try {

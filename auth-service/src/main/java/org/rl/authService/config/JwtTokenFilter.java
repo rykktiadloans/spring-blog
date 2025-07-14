@@ -20,6 +20,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Iterator;
 
+/**
+ * A filter adds the authentication info to the request based on the JWT token
+ */
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
@@ -28,6 +31,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     private final Logger logger = LogManager.getLogger(JwtService.class);
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {

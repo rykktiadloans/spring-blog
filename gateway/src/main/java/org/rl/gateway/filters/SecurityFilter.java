@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
+/**
+ * A gateway filter that checks the request for authorization
+ */
 @Component
 public class SecurityFilter implements GatewayFilter {
     @Autowired
@@ -30,6 +33,12 @@ public class SecurityFilter implements GatewayFilter {
     private AuthClient authClient;
     private final Logger logger = LogManager.getLogger(SecurityFilter.class);
 
+    /**
+     * Extract JWT token from the request and validate it using authorization microservice. If the token is absent or invalid, then return HTTP Unauthorized
+     * @param exchange Request-response exchange
+     * @param chain Gateway filter chain
+     * @return Call next filter or short circuit
+     */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         val request = exchange.getRequest();

@@ -25,6 +25,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+/**
+ * Configuration of the Spring Cloud Gateway
+ */
 @Configuration
 @Slf4j
 public class GatewayConfig {
@@ -37,6 +40,12 @@ public class GatewayConfig {
 
     @Autowired
     private SecurityFilter securityFilter;
+
+    /**
+     * Gateway route configuration
+     * @param builder Builder object for the routes
+     * @return Routes
+     */
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -58,11 +67,20 @@ public class GatewayConfig {
                                 .prefixPath("/api/v1")
                         )
                         .uri(apiUrl))
-                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/**")
+                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/login")
+                        .uri(frontendUrl))
+                .route(route -> route.path("/owner/newpost")
+                        .filters(filter -> filter.filter(securityFilter))
                         .uri(frontendUrl))
                 .build();
     }
 
+    /**
+     * Register an HTTPS redirect filter.
+     * TODO: remove
+     * @deprecated It's not really deprecated but it just doesn't really seem to work.
+     * @return HTTPS redirect filter
+     */
     @Bean
     public WebFilter httpsRedirectFilter() {
         return new WebFilter() {

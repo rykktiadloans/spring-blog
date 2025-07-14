@@ -7,11 +7,18 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 import org.springframework.web.server.WebFilter;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 
+/**
+ * Entrypoint class
+ */
 @SpringBootApplication
 @EnableWebFlux
 @EnableReactiveFeignClients
 public class GatewayApplication {
 
+	/**
+	 * Entrypoint method
+	 * @param args CLI arguments
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(GatewayApplication.class, args);
 	}

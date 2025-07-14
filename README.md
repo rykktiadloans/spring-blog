@@ -12,10 +12,12 @@
 - [x] Add Javadoc
 - [ ] Proper constraints
 - [ ] Add ResourceResponse
+- [ ] Refactor other stuff
 - [ ] Add tests
 - [ ] Migrate to Kubernetes
 - [ ] Add a CI/CD pipeline
 - [ ] Add JSDoc
+- [ ] Add rate limiter
 - [ ] Proper styling
 - [ ] Add summaries to posts
 - [ ] Add general purpose file storage system

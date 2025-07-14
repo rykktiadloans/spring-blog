@@ -22,7 +22,7 @@ public class PostService {
     /**
      * Return a post with the specific ID
      * @param id ID of the post
-     * @exception {@link MissingEntityException} if the post isn't found
+     * @throws MissingEntityException Throws if the post isn't found
      * @return Post
      */
     public Post getById(int id) {
@@ -37,7 +37,7 @@ public class PostService {
     /**
      * Return a post with the specific ID that is also published
      * @param id ID of the post
-     * @exception {@link MissingEntityException} if the post isn't found
+     * @exception MissingEntityException Throws if the post isn't found
      * @return Post
      */
     public Post getByIdWhenPublished(int id) {

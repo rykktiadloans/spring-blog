@@ -1,5 +1,8 @@
 package org.rl.shared.exceptions;
 
+/**
+ * Exception to throw in case of storage issues
+ */
 public class StorageException extends RuntimeException {
 
     public StorageException() {}
