@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * The centralized exception handler
+ */
 @ControllerAdvice
 public class ApiExceptionHandler {
 
+    /**
+     * Return HTTP code 404 Not Found in case {@link MissingEntityException} is thrown
+     */
     @ResponseStatus(value = HttpStatus.NOT_FOUND
             , reason = "Entity was not found")
     @ExceptionHandler({
@@ -20,6 +26,9 @@ public class ApiExceptionHandler {
     public void handleMissingEntityException() {
     }
 
+    /**
+     * Return HTTP code 400 Bad Request in case {@link StorageException} is thrown
+     */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST
             , reason = "Storage failure")
     @ExceptionHandler({

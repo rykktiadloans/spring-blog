@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.rl.shared.model.responses.ResourceResponse;
 
+/**
+ * An entity corresponding to a resource, such as a file
+ */
 @Entity
 @Table(name = "resources")
 @AllArgsConstructor
@@ -12,10 +15,16 @@ import org.rl.shared.model.responses.ResourceResponse;
 @Setter
 @Builder
 public class Resource {
+    /**
+     * Id of the resource
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    /**
+     * Name of the resource (its name)
+     */
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

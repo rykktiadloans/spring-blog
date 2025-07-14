@@ -9,11 +9,12 @@
 - [x] Add proper pagination to Vue
 - [x] Refactor Vue a bit
 - [x] Proper structuring
+- [x] Add Javadoc
 - [ ] Proper constraints
+- [ ] Add ResourceResponse
 - [ ] Add tests
 - [ ] Migrate to Kubernetes
 - [ ] Add a CI/CD pipeline
-- [ ] Add Javadoc
 - [ ] Add JSDoc
 - [ ] Proper styling
 - [ ] Add summaries to posts

@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ * A REST controller for the uploaded resources, such as pictures
+ */
 @RestController
 @RequestMapping(path = "/api/v1/resources")
 @Validated
@@ -27,6 +30,11 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
+    /**
+     * Fetch the resource by its name
+     * @param name The name of the resource, which should be a file.
+     * @return The contents resource
+     */
     @GetMapping(value = "/{name}")
     public ResponseEntity<FileSystemResource> getResource(@PathVariable(name = "name") String name) {
         Resource resource = this.resourceService.getByName(name);
@@ -42,6 +50,11 @@ public class ResourceController {
         }
     }
 
+    /**
+     * Save a new resource to the permanent storage
+     * @param file The file to save
+     * @return The new resource
+     */
     @PostMapping(value = "")
     public Resource postResource(@RequestBody @NotNull MultipartFile file) {
         return this.resourceService.save(file);

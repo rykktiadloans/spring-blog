@@ -17,32 +17,62 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
+/**
+ * A REST controller for working with {@link Post} entities
+ */
 @RestController
 @RequestMapping(path = "/api/v1/posts", produces = "application/json")
 public class PostController {
     @Autowired
     private PostService postService;
+
+    /**
+     * Returns {@link PostResponse} entities that are available for all users ({@link PostState} Published)
+     * @param page The size and offset of the query
+     * @return List of {@link PostResponse} that are published
+     */
     @GetMapping("")
     public List<PostResponse> getPosts(Pageable page) {
         return this.postService.getByPageWhereState(PostState.PUBLISHED, page).stream()
                 .map(Post::toResponse).toList();
     }
 
+    /**
+     * Returns {@link PostResponse} entities. Should only available for authorized users
+     * @param page The size and offset of the query
+     * @return List of {@link PostResponse}
+     */
     @PostMapping(value = "/anystate")
     public List<PostResponse> getPostsWithState(Pageable page) {
         return this.postService.getByPage(page).stream()
                 .map(Post::toResponse).toList();
     }
 
+    /**
+     * Returns a specific {@link PostResponse} by its ID. Can only return published posts.
+     * @param id ID of the post
+     * @return Post response
+     */
     @GetMapping("/{id}")
     public PostResponse getPost(@PathVariable(name = "id") Integer id) {
         return this.postService.getByIdWhenPublished(id).toResponse();
     }
 
+    /**
+     * Returns a specific {@link PostResponse} by its ID. Should be available only for authorized users
+     * @param id ID of the post
+     * @return Post response
+     */
     @PostMapping("/anystate/{id}")
     public PostResponse getPostAnyState(@PathVariable(name = "id") Integer id) {
         return this.postService.getById(id).toResponse();
     }
+
+    /**
+     * Create a new {@link Post}
+     * @param postDto A valid Post DTO
+     * @return The new post
+     */
     @PostMapping("")
     public PostResponse postNewPost(@Valid @RequestBody PostRequest postDto) {
         Post post = Post.builder()
@@ -54,6 +84,11 @@ public class PostController {
         return this.postService.save(post).toResponse();
     }
 
+    /**
+     * Update an old post. If the post's state is transfered from Draft to Published, it also updates the creation date
+     * @param postDto The details to be updated
+     * @return The updated post
+     */
     @PutMapping("")
     public PostResponse putNewPost(@Valid @RequestBody PostRequest postDto) {
         if(postDto.id() == null) {
