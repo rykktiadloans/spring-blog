@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.val;
 import org.rl.apiService.model.Resource;
 import org.rl.apiService.services.ResourceService;
+import org.rl.shared.model.responses.ResourceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class ResourceController {
      * @return The new resource
      */
     @PostMapping(value = "")
-    public Resource postResource(@RequestBody @NotNull MultipartFile file) {
-        return this.resourceService.save(file);
+    public ResourceResponse postResource(@RequestBody @NotNull MultipartFile file) {
+        return this.resourceService.save(file).toResponse();
     }
 }

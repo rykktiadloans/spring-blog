@@ -11,7 +11,7 @@
 - [x] Proper structuring
 - [x] Add Javadoc
 - [x] Proper constraints
-- [ ] Add ResourceResponse
+- [x] Add ResourceResponse
 - [ ] Refactor other stuff
 - [ ] Add tests
 - [ ] Migrate to Kubernetes
