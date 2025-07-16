@@ -20,6 +20,16 @@ import java.util.List;
 @Setter
 public class Post {
     /**
+     * Maximum allowed length of the post title
+     */
+    public static final int TITLE_LENGTH = 256;
+
+    /**
+     * Maximum allowed length of the post contents
+     */
+    public static final int CONTENT_LENGTH = 8192;
+
+    /**
      * Id of the post
      */
     @Id
@@ -29,13 +39,13 @@ public class Post {
     /**
      * Title of the post
      */
-    @Column(name = "title", nullable = false, unique = true)
+    @Column(name = "title", length = TITLE_LENGTH, nullable = false, unique = true)
     private String title;
 
     /**
      * Content of the post
      */
-    @Column(name = "content", length = 4096, nullable = false)
+    @Column(name = "content", length = CONTENT_LENGTH, nullable = false)
     private String content;
 
     /**

@@ -28,7 +28,7 @@ export class ResourceRepository {
     return resource;
   }
 
-  async postImage(file: File): Promise<string> {
+  async postImage(file: File): Promise<string | null> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");
     }
@@ -41,9 +41,13 @@ export class ResourceRepository {
       },
       body: data,
     })
-      .then((response) => response.json())
-      .then((json) => json.name)
+      .then((response) => response.status == StatusCodes.PAYLOAD_TOO_LARGE
+        ? null : response.json())
       .catch((error) => console.log(error));
-    return resource;
+
+    if(resource == null) {
+      return null;
+    }
+    return resource.name;
   }
 }

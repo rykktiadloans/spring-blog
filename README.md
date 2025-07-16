@@ -10,12 +10,14 @@
 - [x] Refactor Vue a bit
 - [x] Proper structuring
 - [x] Add Javadoc
-- [ ] Proper constraints
+- [x] Proper constraints
 - [ ] Add ResourceResponse
 - [ ] Refactor other stuff
 - [ ] Add tests
 - [ ] Migrate to Kubernetes
 - [ ] Add a CI/CD pipeline
+- [ ] Add Error page
+- [ ] Add notification system to frontend
 - [ ] Add JSDoc
 - [ ] Add rate limiter
 - [ ] Proper styling
@@ -23,4 +25,4 @@
 - [ ] Add general purpose file storage system
 - [ ] Add OpenAPI
 - [ ] Add RSS
-- [ ] Add comments
+- [ ] Add post comment section

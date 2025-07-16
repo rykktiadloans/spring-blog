@@ -53,6 +53,7 @@ As you can see, this thing supports Markdown.
 `);
 const badImages: Ref<string[]> = ref([]);
 const fileInput = useTemplateRef("fileInput");
+const errors: Ref<string[]> = ref([]);
 
 onMounted(async () => {
   if (typeof route.query["post"] == "string") {
@@ -77,12 +78,22 @@ const validateImages = async () => {
   }
 };
 
+const validateInput = async () => {
+  errors.value = [];
+  if(title.value.length > 255) {
+    errors.value.push("Title is too long. Max length is 255");
+  }
+  if(content.value.length > 8192) {
+    errors.value.push("Content section is too long. Max length is 8192");
+  }
+};
+
 const onUploadClick = async (imageName: string) => {
   const input = fileInput.value;
   if (input == null) {
     return;
   }
-  input.onchange = () => {
+  input.onchange = async () => {
     const files = input.files;
     if (files == null) {
       throw new Error("No files selected");
@@ -94,27 +105,40 @@ const onUploadClick = async (imageName: string) => {
     if (name == undefined) {
       return;
     }
-    resourceRepository.postImage(files[0]);
+
+    const resource = await resourceRepository.postImage(files[0]);
+    if(resource == null) {
+      alert(`${name} is too large!`) // TODO: add a proper notification system
+    }
   };
   input.click();
 };
 
 const onPublishClick = async () => {
   await validateImages();
-  if (badImages.value.length != 0) {
+  await validateInput();
+  if (badImages.value.length > 0 || errors.value.length > 0) {
     return;
   }
   const newPost = await repositories.postRepository.sendPost(
     new Post(id.value, title.value, content.value, new Date(Date.now()), "PUBLISHED"),
   );
-  router.push(`/posts/${newPost.id}`);
+  if (newPost != null) {
+    router.push(`/posts/${newPost.id}`);
+  }
 };
 
 const onDraftClick = async () => {
+  await validateInput();
+  if (errors.value.length > 0) {
+    return;
+  }
   const newPost = await repositories.postRepository.sendPost(
     new Post(id.value, title.value, content.value, new Date(Date.now()), "DRAFT"),
   );
-  router.push(`/posts/${newPost.id}`);
+  if(newPost != null) {
+    router.push(`/posts/${newPost.id}`);
+  }
 };
 </script>
 
@@ -139,6 +163,12 @@ const onDraftClick = async () => {
       </div>
       <div class="bad-image-help" v-if="badImages.length != 0">
         Remember: an image can be accessed with "/resources/{image name}"
+      </div>
+
+      <div class="error-container" v-if="errors.length > 0">
+        <div class="error" v-for="error, index in errors" :key="index">
+          {{error}}
+        </div>
       </div>
 
       <button @click.prevent="validateImages">Validate images</button>

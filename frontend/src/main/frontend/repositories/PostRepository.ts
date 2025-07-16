@@ -77,12 +77,12 @@ export class PostRepository {
     return posts;
   }
 
-  async sendPost(post: Post): Promise<Post> {
+  async sendPost(post: Post): Promise<Post | null> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");
     }
     const method = post.id == 0 ? "POST" : "PUT";
-    let newPost = await fetch("/api/v1/posts", {
+    const newPost = await fetch("/api/v1/posts", {
       method: method,
       headers: {
         "Content-Type": "application/json",
@@ -91,9 +91,14 @@ export class PostRepository {
       body: JSON.stringify(post),
     })
       .then((response) => {
-        return response.json();
-      })
-      .then((json) => Post.deserialize(json));
-    return newPost;
+      if (response.status == StatusCodes.BAD_REQUEST) {
+        return null;
+      }
+      return response.json();
+    });
+    if (newPost == null) {
+      return null;
+    }
+    return Post.deserialize(newPost);
   }
 }

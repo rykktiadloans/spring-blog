@@ -2,6 +2,7 @@ package org.rl.apiService.handlers;
 
 import org.rl.shared.exceptions.MissingEntityException;
 import org.rl.shared.exceptions.StorageException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,6 +36,17 @@ public class ApiExceptionHandler {
             StorageException.class
     })
     public void handleStorageException() {
+    }
+
+    /**
+     * Return HTTP code 400 Bad Request in case {@link org.springframework.dao.DataIntegrityViolationException} is thrown
+     */
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST
+            , reason = "Entity could not be created/updated due to constraint violation")
+    @ExceptionHandler({
+            DataIntegrityViolationException.class
+    })
+    public void handleDataIntegrityViolationException() {
     }
 
 }
