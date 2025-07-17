@@ -49,7 +49,10 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(route -> route.path("/api/v1/auth/**")
+                .route(route -> route.path("/api/v1/auth/login")
+                        .uri(authUrl))
+                .route(route -> route.path("/api/v1/auth/expiration")
+                        .filters(filter -> filter.filter(securityFilter))
                         .uri(authUrl))
                 .route(route -> route.path("/api/v1/posts", "/api/v1/posts/**", "/api/v1/resources", "/api/v1/resources/**")
                         .and()
@@ -73,44 +76,6 @@ public class GatewayConfig {
                         .filters(filter -> filter.filter(securityFilter))
                         .uri(frontendUrl))
                 .build();
-    }
-
-    /**
-     * Register an HTTPS redirect filter.
-     * TODO: remove
-     * @deprecated It's not really deprecated but it just doesn't really seem to work.
-     * @return HTTPS redirect filter
-     */
-    @Bean
-    public WebFilter httpsRedirectFilter() {
-        return new WebFilter() {
-            @Override
-            public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-                URI originalUri = exchange.getRequest().getURI();
-                log.debug("Hello from filter!");
-
-                //here set your condition to http->https redirect
-                List<String> forwardedValues = exchange.getRequest().getHeaders().get("x-forwarded-proto");
-                if (forwardedValues != null && forwardedValues.contains("http")) {
-                    try {
-                        URI mutatedUri = new URI("https",
-                                originalUri.getUserInfo(),
-                                originalUri.getHost(),
-                                originalUri.getPort(),
-                                originalUri.getPath(),
-                                originalUri.getQuery(),
-                                originalUri.getFragment());
-                        ServerHttpResponse response = exchange.getResponse();
-                        response.setStatusCode(HttpStatus.MOVED_PERMANENTLY);
-                        response.getHeaders().setLocation(mutatedUri);
-                        return Mono.empty();
-                    } catch (URISyntaxException e) {
-                        throw new IllegalStateException(e.getMessage(), e);
-                    }
-                }
-                return chain.filter(exchange);
-            }
-        };
     }
 
 }

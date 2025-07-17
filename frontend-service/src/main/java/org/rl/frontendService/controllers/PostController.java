@@ -22,7 +22,7 @@ public class PostController {
      * @return Page for a specific post
      */
     @GetMapping("/posts/{id}")
-    public String getPostById(@PathVariable(name = "id") Integer id, Model model) {
+    public String getPostById(@PathVariable(name = "id") Integer id) {
         return "forward:/index.html";
     }
 

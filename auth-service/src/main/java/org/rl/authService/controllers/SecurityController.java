@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * REST controller for security related things
  */
@@ -52,6 +54,16 @@ public class SecurityController {
         boolean res = this.jwtService.validateJwtToken(token);
         log.debug("RES: " + res);
         return res;
+    }
+
+    /**
+     * Return the expiration date of the token
+     * @param token JWT token
+     * @return Its expiration date
+     */
+    @PostMapping(path = "/expiration")
+    public Date expiration(@RequestParam(name = "token") String token) {
+        return this.jwtService.getExpirationFromToken(token);
     }
 
 

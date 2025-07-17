@@ -1,7 +1,8 @@
 package org.rl.authService.config;
 
-import org.rl.shared.exceptions.MissingEnvVariableException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -25,10 +26,14 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class WebSecurityConfig {
 
-    @Autowired
-    private Environment env;
+    @Value("${owner.name}")
+    private String ownerName;
+
+    @Value("${owner.password}")
+    private String ownerPassword;
 
     @Autowired
     private JwtEntryPoint jwtEntryPoint;
@@ -83,19 +88,9 @@ public class WebSecurityConfig {
      */
     @Bean
     public UserDetailsService userDetailsService() {
-        String ownerName = env.getProperty("OWNER_NAME");
-        String ownerPassword = env.getProperty("OWNER_PASSWORD");
-        if(ownerName == null || ownerName.isBlank()) {
-            throw new MissingEnvVariableException("Environmental variable 'OWNER_NAME' is missing!");
-        }
-
-        if(ownerPassword == null || ownerPassword.isBlank()) {
-            throw new MissingEnvVariableException("Environmental variable 'OWNER_PASSWORD' is missing!");
-        }
-
         UserDetails user = User
-                .withUsername(ownerName)
-                .password(passwordEncoder().encode(ownerPassword))
+                .withUsername(this.ownerName)
+                .password(passwordEncoder().encode(this.ownerPassword))
                 .roles("OWNER")
                 .build();
         return new InMemoryUserDetailsManager(user);

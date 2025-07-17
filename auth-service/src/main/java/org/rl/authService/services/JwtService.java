@@ -62,6 +62,19 @@ public class JwtService {
     }
 
     /**
+     * Extract the expiration date from JWT token
+     * @param token JWT token
+     * @return Expiration date
+     */
+    public Date getExpirationFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(key).build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+    }
+
+    /**
      * Validate the token
      * @param token JWT token to avlidate
      * @return True if the JWT token is valid, false otherwise.
