@@ -36,7 +36,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build API service
-        run: ./gradlew api-service:bootBuildImage -x api-service:test
+        run: ./gradlew api-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-api-service -x api-service:test
 
       - name: DEBUG - docker images
         run: docker images
