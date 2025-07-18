@@ -14,9 +14,10 @@
 - [x] Add ResourceResponse
 - [x] Refactor other stuff
 - [x] Add tests
+- [x] Added basic CI script
 - [ ] Migrate to Kubernetes
-- [ ] Add a CI/CD pipeline
 - [ ] Add Error page
+- [ ] Add a proper deployment option
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc
 - [ ] Add more tests
