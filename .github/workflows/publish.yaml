@@ -38,5 +38,8 @@ jobs:
       - name: Build API service
         run: ./gradlew api-service:bootBuildImage -x api-service:test
 
+      - name: DEBUG - docker images
+        run: docker images
+
       - name: Push API service
-        run: docker push rykktiadloans/blog-api-service
+        run: docker push --all-tags rykktiadloans/blog-api-service
