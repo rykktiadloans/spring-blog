@@ -38,14 +38,5 @@ jobs:
       - name: Build API service
         run: ./gradlew api-service:bootBuildImage -x api-service:test
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: rykktiadloans/blog-api-service:latest
+      - name: Push API service
+        run: docker push rykktiadloans/blog-api-service:latest
