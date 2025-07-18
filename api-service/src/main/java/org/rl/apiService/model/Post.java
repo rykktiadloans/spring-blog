@@ -2,6 +2,7 @@ package org.rl.apiService.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import org.rl.shared.model.responses.PostResponse;
 import org.rl.shared.model.PostState;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
+@FieldNameConstants
 public class Post {
     /**
      * Maximum allowed length of the post title

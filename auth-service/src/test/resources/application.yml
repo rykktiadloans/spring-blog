@@ -1,0 +1,7 @@
+jwt:
+  secret: genericsecretphraseofsomekindyouknowhowitisusually
+  expiration: 1000000
+
+owner:
+  name: ownername
+  password: ownerpass

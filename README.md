@@ -12,13 +12,14 @@
 - [x] Add Javadoc
 - [x] Proper constraints
 - [x] Add ResourceResponse
-- [ ] Refactor other stuff
-- [ ] Add tests
+- [x] Refactor other stuff
+- [x] Add tests
 - [ ] Migrate to Kubernetes
 - [ ] Add a CI/CD pipeline
 - [ ] Add Error page
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc
+- [ ] Add more tests
 - [ ] Add rate limiter
 - [ ] Proper styling
 - [ ] Add summaries to posts
