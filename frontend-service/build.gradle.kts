@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
 	id("java-conventions")
@@ -14,6 +15,7 @@ configurations {
 repositories {
 	mavenCentral()
 }
+
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -34,6 +36,10 @@ dependencyManagement {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<BootBuildImage> {
+	imageName = "rykktiadloans/blog-frontend-service"
 }
 
 tasks.register<Copy>("processFrontendResources") {
