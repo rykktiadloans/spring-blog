@@ -39,10 +39,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.withType<BootBuildImage> {
-	imageName = "rykktiadloans/blog-frontend-service$version"
-}
-
 tasks.register<Copy>("processFrontendResources") {
 	// Directory containing the artifacts produced by the frontend project
 	val frontendProjectDir = project(":frontend").layout.projectDirectory

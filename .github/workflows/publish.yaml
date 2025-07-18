@@ -59,7 +59,7 @@ jobs:
         run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-auth-service:${{ github.ref_name }}
 
       - name: Push Frontend service
-        run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-gateway:${{ github.ref_name }}
+        run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-frontend-service:${{ github.ref_name }}
 
       - name: Push Gateway service
         run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-gateway:${{ github.ref_name }}
