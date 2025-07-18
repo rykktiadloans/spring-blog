@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import static org.rl.apiService.utils.ExamplePosts.buildExamplePost2;
 
 @SpringBootTest
 @ImportTestcontainers(PostgreSqlTestContainer.class)
+@DirtiesContext
 public class PostRepositoryTest {
     @Autowired
     private PostRepository postRepository;
