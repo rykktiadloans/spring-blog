@@ -46,7 +46,7 @@ public class PostRepositoryTest {
 
         assertThat(post.isPresent())
                 .withFailMessage(() -> "Post could not be found!")
-                .isTrue();
+                .isFalse();
 
         assertThat(post.get())
                 .usingRecursiveComparison()
