@@ -5,6 +5,7 @@ plugins {
 }
 
 group = "org.rl"
+version = "0.0.1-SNAPSHOT"
 
 configurations {
 	compileOnly {
@@ -44,7 +45,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<BootBuildImage> {
-	imageName = "rykktiadloans/blog-gateway$version"
+	imageName = "rykktiadloans/blog-gateway:$version"
 }
 
 tasks.register<Copy>("getDeps") {

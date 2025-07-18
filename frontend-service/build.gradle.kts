@@ -5,6 +5,7 @@ plugins {
 }
 
 group = "org.rl"
+version = "0.0.1-SNAPSHOT"
 
 configurations {
 	compileOnly {
