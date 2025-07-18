@@ -2,8 +2,8 @@ name: Publish Docker containers
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "v*.*.*"
 
 env:
   REGISTRY: ghcr.io
@@ -36,10 +36,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build API service
-        run: ./gradlew api-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-api-service -x api-service:test
+        run: ./gradlew api-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-api-service:${{ github.ref_name }} -x api-service:test
 
       - name: DEBUG - docker images
         run: docker images
 
       - name: Push API service
-        run: docker push --all-tags ${{ env.REGISTRY }}/rykktiadloans/blog-api-service
+        run: docker push --all-tags ${{ env.REGISTRY }}/rykktiadloans/blog-api-service:${{ github.ref_name }}
