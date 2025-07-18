@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
 	id("java-conventions")
@@ -37,6 +38,10 @@ dependencyManagement {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<BootBuildImage> {
+	imageName = "rykktiadloans/blog-auth-service"
 }
 
 tasks.register<Copy>("getDeps") {

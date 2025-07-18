@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
 	id("java-conventions")
@@ -10,6 +11,7 @@ configurations {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
 }
+
 
 repositories {
 	mavenCentral()
@@ -32,6 +34,10 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<BootBuildImage> {
+	imageName = "rykktiadloans/blog-api-service"
 }
 
 tasks.register<Copy>("getDeps") {
