@@ -42,4 +42,4 @@ jobs:
         run: docker images
 
       - name: Push API service
-        run: docker push --all-tags rykktiadloans/blog-api-service
+        run: docker push --all-tags ${{ env.REGISTRY }}/rykktiadloans/blog-api-service
