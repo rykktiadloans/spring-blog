@@ -39,7 +39,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<BootBuildImage> {
-	imageName = "rykktiadloans/blog-frontend-service"
+	imageName = "rykktiadloans/blog-frontend-service$version"
 }
 
 tasks.register<Copy>("processFrontendResources") {

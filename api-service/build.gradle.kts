@@ -37,7 +37,7 @@ tasks.withType<Test> {
 }
 
 tasks.withType<BootBuildImage> {
-	imageName = "rykktiadloans/blog-api-service"
+	imageName = "rykktiadloans/blog-api-service$version"
 }
 
 tasks.register<Copy>("getDeps") {
