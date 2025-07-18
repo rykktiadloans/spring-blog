@@ -9,11 +9,16 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+  test:
+    uses: ./.github/workflows/ci-on-pull.yaml
+
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+    needs:
+      - test
 
     steps:
       - uses: actions/checkout@v4
@@ -38,8 +43,23 @@ jobs:
       - name: Build API service
         run: ./gradlew api-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-api-service:${{ github.ref_name }} -x api-service:test
 
-      - name: DEBUG - docker images
-        run: docker images
+      - name: Build Auth service
+        run: ./gradlew auth-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-auth-service:${{ github.ref_name }} -x auth-service:test
+
+      - name: Build Frontend service
+        run: ./gradlew frontend-service:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-frontend-service:${{ github.ref_name }} -x frontend-service:test
+
+      - name: Build Gateway service
+        run: ./gradlew gateway:bootBuildImage --imageName=${{ env.REGISTRY }}/rykktiadloans/blog-gateway:${{ github.ref_name }} -x gateway:test
 
       - name: Push API service
         run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-api-service:${{ github.ref_name }}
+
+      - name: Push Auth service
+        run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-auth-service:${{ github.ref_name }}
+
+      - name: Push Frontend service
+        run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-gateway:${{ github.ref_name }}
+
+      - name: Push Gateway service
+        run: docker push ${{ env.REGISTRY }}/rykktiadloans/blog-gateway:${{ github.ref_name }}
