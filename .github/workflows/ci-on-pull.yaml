@@ -18,5 +18,5 @@
             distribution: 'temurin'
             cache: gradle
 
-        - name: Run tests
+        - name: Run all tests
           run: gradle test --no-daemon
