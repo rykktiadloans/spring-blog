@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: auth-pod
+  labels:
+    app: auth-app
+spec:
+  containers:
+    - name: auth-service
+      image: ghcr.io/rykktiadloans/blog-auth-service:v0.0.0-snapshot-3
+      ports:
+        - containerPort: 8083
+      env:
+        - name: OWNER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: OWNER_NAME
+        - name: OWNER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: OWNER_PASSWORD
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: JWT_SECRET
+        - name: JWT_EXPIRATION
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: JWT_EXPIRATION
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-app
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083

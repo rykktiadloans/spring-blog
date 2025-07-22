@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: frontend-pod
+  labels:
+    app: frontend-app
+spec:
+  containers:
+    - name: frontend-service
+      image: ghcr.io/rykktiadloans/blog-frontend-service:v0.0.0-snapshot-3
+      ports:
+        - containerPort: 8082
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend-app
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082

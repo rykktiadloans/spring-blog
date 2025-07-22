@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: gateway-pod
+  labels:
+    app: gateway-app
+spec:
+  containers:
+    - name: gateway-service
+      image: ghcr.io/rykktiadloans/blog-gateway:v0.0.1-snapshot-4
+      ports:
+        - containerPort: 8080
+      env:
+        - name: KEY_STORE
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: KEY_STORE
+        - name: KEY_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: KEY_PASSWORD
+        - name: KEY_ALIAS
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: KEY_ALIAS
+        - name: API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: API_URL
+        - name: AUTH_URL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: AUTH_URL
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: FRONTEND_URL
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  selector:
+    app: gateway-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http: 
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gateway-service
+                port:
+                  number: 8080

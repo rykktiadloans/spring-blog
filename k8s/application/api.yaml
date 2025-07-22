@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: api-pod
+  labels:
+    app: api-app
+spec:
+  containers:
+    - name: api-service
+      image: ghcr.io/rykktiadloans/blog-api-service:v0.0.0-snapshot-3
+      ports:
+        - containerPort: 8081
+      env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: DB_URL
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: DB_USER
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: blog-secrets
+              key: DB_PASSWORD
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: update
+      volumeMounts:
+        - name: api-data
+          mountPath: /workspace/uploaded-resources
+
+  volumes:
+    - name: api-data
+      persistentVolumeClaim:
+        claimName: api-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api-app
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: api-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Mi
+
