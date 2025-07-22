@@ -36,8 +36,6 @@ services:
       - ./shared/src/main:/wd/shared/src/main
       - ./target:/wd/target
     restart: no
-    environment:
-      - GATEWAY_URL=http://gateway:8080
     depends_on:
       - api-service
     networks:

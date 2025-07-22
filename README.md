@@ -53,6 +53,7 @@ In order for the fleet to run, the following environmental variables need to be 
 - [x] Add tests
 - [x] Added basic CI script
 - [ ] Add the ability to set logging level and live reload with env variables.
+- [ ] Remove HTTPS from gateway and replace it with NGINX
 - [ ] Migrate to Kubernetes
 - [ ] Add Error page
 - [ ] Add a proper deployment option
