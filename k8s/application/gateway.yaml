@@ -64,6 +64,8 @@ metadata:
   name: gateway-ingress
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.org/ssl-services: “eclwatch"
 
 spec:
   ingressClassName: nginx
