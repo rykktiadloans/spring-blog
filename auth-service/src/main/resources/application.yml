@@ -3,11 +3,11 @@ spring:
     name: auth-service
   devtools:
     restart:
-      enabled: true
+      enabled: ${DEVTOOLS}
       additional-paths:
         - .
     livereload:
-      enabled: true
+      enabled: ${DEVTOOLS}
 
 jwt:
   secret: ${JWT_SECRET}
@@ -20,7 +20,7 @@ owner:
 
 logging:
   level:
-    root: DEBUG
+    root: ${LOGGING_LEVEL}
 
 server:
   port: 8083

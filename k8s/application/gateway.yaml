@@ -11,21 +11,6 @@ spec:
       ports:
         - containerPort: 8080
       env:
-        - name: KEY_STORE
-          valueFrom:
-            configMapKeyRef:
-              name: blog-config
-              key: KEY_STORE
-        - name: KEY_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: blog-config
-              key: KEY_PASSWORD
-        - name: KEY_ALIAS
-          valueFrom:
-            configMapKeyRef:
-              name: blog-config
-              key: KEY_ALIAS
         - name: API_URL
           valueFrom:
             configMapKeyRef:
@@ -41,6 +26,16 @@ spec:
             configMapKeyRef:
               name: blog-config
               key: FRONTEND_URL
+        - name: LOGGING_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: LOGGING_LEVEL
+        - name: DEVTOOLS
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: DEVTOOLS
 
 ---
 

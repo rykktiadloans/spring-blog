@@ -3,11 +3,11 @@ spring:
     name: api-service
   devtools:
     restart:
-      enabled: true
+      enabled: ${DEVTOOLS}
       additional-paths:
         - .
     livereload:
-      enabled: true
+      enabled: ${DEVTOOLS}
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
@@ -21,7 +21,7 @@ spring:
 
 logging:
   level:
-    root: DEBUG
+    root: ${LOGGING_LEVEL}
 
 server:
   port: 8081

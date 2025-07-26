@@ -31,6 +31,16 @@ spec:
             secretKeyRef:
               name: blog-secrets
               key: JWT_EXPIRATION
+        - name: LOGGING_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: LOGGING_LEVEL
+        - name: DEVTOOLS
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: DEVTOOLS
 
 ---
 

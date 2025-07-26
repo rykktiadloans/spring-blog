@@ -17,11 +17,12 @@ The application consists of 4 microsevrices, not counting a database container. 
 
 ## Running it
 
+### Docker Compose Dev Build
 This application can be built and run locally using Docker Compose with `compose.yaml`.
 
 Docker containers for specific microservices are also publicly available in the *Packages* section.
 
-In order for the fleet to run, the following environmental variables need to be set.
+In order for the Docker Compose to run, the following environmental variables need to be set.
 
 | Environmental Variable | Example Value                                              | Purpose                                                        |
 |------------------------|------------------------------------------------------------|----------------------------------------------------------------|
@@ -36,6 +37,9 @@ In order for the fleet to run, the following environmental variables need to be 
 | KEY_STORE              | `/app/certificate/keystore.p12`                            | Key store for HTTPS                                            |
 | KEY_PASSWORD           | `keystore-password`                                        | Password to the keystore                                       |
 | KEY_ALIAS              | `certification`                                            | Key store alias                                                |
+| LOGGING_LEVEL          | `DEBUG`                                                    | Logging level of all applications                              | 
+| DEVTOOLS               | `true`                                                     | Turn on reload on file change for all applications             |
+
 
 ## To-do list
 - [x] Ability to post images
@@ -52,11 +56,11 @@ In order for the fleet to run, the following environmental variables need to be 
 - [x] Refactor other stuff
 - [x] Add tests
 - [x] Added basic CI script
+- [x] Remove HTTPS from gateway and replace it with NGINX
+- [x] Add Kubernetes config
 - [ ] Add the ability to set logging level and live reload with env variables.
-- [ ] Remove HTTPS from gateway and replace it with NGINX
-- [ ] Migrate to Kubernetes
 - [ ] Add Error page
-- [ ] Add a proper deployment option
+- [ ] Try deploying it somewhere
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc
 - [ ] Add more tests

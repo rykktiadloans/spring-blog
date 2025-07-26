@@ -10,6 +10,17 @@ spec:
       image: ghcr.io/rykktiadloans/blog-frontend-service:v0.0.0-snapshot-3
       ports:
         - containerPort: 8082
+      env:
+        - name: LOGGING_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: LOGGING_LEVEL
+        - name: DEVTOOLS
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: DEVTOOLS
 
 ---
 

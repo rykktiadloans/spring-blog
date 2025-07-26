@@ -3,11 +3,11 @@ spring:
     name: gateway
   devtools:
     restart:
-      enabled: true
+      enabled: ${DEVTOOLS}
       additional-paths:
         - .
     livereload:
-      enabled: true
+      enabled: ${DEVTOOLS}
 
 
 server:
@@ -15,7 +15,7 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    root: ${LOGGING_LEVEL}
 
 services:
   api: ${API_URL}

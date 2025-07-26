@@ -28,6 +28,16 @@ spec:
               key: DB_PASSWORD
         - name: SPRING_JPA_HIBERNATE_DDL_AUTO
           value: update
+        - name: LOGGING_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: LOGGING_LEVEL
+        - name: DEVTOOLS
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: DEVTOOLS
       volumeMounts:
         - name: api-data
           mountPath: /workspace/uploaded-resources
