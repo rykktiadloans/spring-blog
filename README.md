@@ -58,7 +58,7 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Added basic CI script
 - [x] Remove HTTPS from gateway and replace it with NGINX
 - [x] Add Kubernetes config
-- [ ] Add the ability to set logging level and live reload with env variables.
+- [x] Add the ability to set logging level and live reload with env variables.
 - [ ] Add Error page
 - [ ] Try deploying it somewhere
 - [ ] Add notification system to frontend
