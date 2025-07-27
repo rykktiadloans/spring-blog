@@ -14,11 +14,20 @@ public class HomeController {
     /**
      * Returns the homepage
      * @param model
-     * @return
+     * @return Homepage
      */
     @GetMapping("/")
     String getHome(Model model) {
         model.addAttribute("content", "work");
+        return "forward:/index.html";
+    }
+
+    /**
+     * Return the page when something is not found
+     * @return Error page
+     */
+    @GetMapping("/404")
+    String getNotFound() {
         return "forward:/index.html";
     }
 }

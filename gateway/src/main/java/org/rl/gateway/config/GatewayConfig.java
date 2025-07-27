@@ -70,10 +70,12 @@ public class GatewayConfig {
                                 .prefixPath("/api/v1")
                         )
                         .uri(apiUrl))
-                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/login")
+                .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/login", "/404")
                         .uri(frontendUrl))
                 .route(route -> route.path("/owner/newpost")
                         .filters(filter -> filter.filter(securityFilter))
+                        .uri(frontendUrl))
+                .route(route -> route.alwaysTrue()
                         .uri(frontendUrl))
                 .build();
     }

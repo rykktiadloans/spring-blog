@@ -23,6 +23,7 @@ services:
     depends_on:
       - frontend-service
       - api-service
+      - auth-service
     networks:
       - blog-net
 
