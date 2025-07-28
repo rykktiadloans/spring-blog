@@ -5,3 +5,8 @@ jwt:
 owner:
   name: ownername
   password: ownerpass
+
+
+logging:
+  level:
+    root: DEBUG

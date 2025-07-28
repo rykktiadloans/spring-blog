@@ -44,9 +44,6 @@ public class GatewayConfig {
     @Autowired
     private SecurityFilter securityFilter;
 
-    @Autowired
-    private KeyResolver keyResolver;
-
     /**
      * Gateway route configuration
      * @param builder Builder object for the routes
@@ -56,8 +53,6 @@ public class GatewayConfig {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(route -> route.path("/api/v1/auth/login")
-                        //.filters(filter -> filter.requestRateLimiter(rateLimiter -> rateLimiter
-                        //                .setKeyResolver(this.keyResolver)))
                         .uri(authUrl))
                 .route(route -> route.path("/api/v1/auth/expiration")
                         .filters(filter -> filter.filter(securityFilter))

@@ -61,7 +61,7 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Add the ability to set logging level and live reload with env variables.
 - [x] Add Error page
 - [x] Add Valkey caching
-- [ ] Add rate limiter
+- [ ] Add rate limiter (Using NGINX ingress)
 - [ ] Try deploying it somewhere
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc
