@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: gateway-service
-      image: ghcr.io/rykktiadloans/blog-gateway:v0.0.1-snapshot-4
+      image: ghcr.io/rykktiadloans/blog-gateway:v0.0.1-snapshot-5
       ports:
         - containerPort: 8080
       env:
@@ -61,6 +61,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.org/ssl-services: “eclwatch"
+    nginx.ingress.kubernetes.io/limit-rps: "10"
 
 spec:
   ingressClassName: nginx

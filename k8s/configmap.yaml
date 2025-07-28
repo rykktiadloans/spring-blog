@@ -8,7 +8,7 @@ data:
   API_URL: http://api-service:8081
   AUTH_URL: http://auth-service:8083
   FRONTEND_URL: http://frontend-service:8082
-  VALKEY: http://valkey-service:6739
+  VALKEY: valkey-service
   LOGGING_LEVEL: WARN
-  DEVTOOLS: false
+  DEVTOOLS: "false"
 
