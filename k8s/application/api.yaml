@@ -28,6 +28,11 @@ spec:
               key: DB_PASSWORD
         - name: SPRING_JPA_HIBERNATE_DDL_AUTO
           value: update
+        - name: VALKEY
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: VALKEY
         - name: LOGGING_LEVEL
           valueFrom:
             configMapKeyRef:

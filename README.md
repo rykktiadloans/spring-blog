@@ -60,11 +60,12 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Add Kubernetes config
 - [x] Add the ability to set logging level and live reload with env variables.
 - [x] Add Error page
+- [x] Add Valkey caching
+- [ ] Add rate limiter
 - [ ] Try deploying it somewhere
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc
 - [ ] Add more tests
-- [ ] Add rate limiter
 - [ ] Proper styling
 - [ ] Add summaries to posts
 - [ ] Add general purpose file storage system

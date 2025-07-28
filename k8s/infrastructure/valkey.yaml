@@ -1,0 +1,27 @@
+
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: valkey-pod
+  labels:
+    app: valkey-app
+spec:
+  containers:
+    - name: valkey
+      image: valkey/valkey:8.0-alpine
+      ports:
+        - containerPort: 6379
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey-service
+spec:
+  selector:
+    app: valkey-app
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379

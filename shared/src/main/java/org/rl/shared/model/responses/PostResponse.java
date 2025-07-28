@@ -2,6 +2,7 @@ package org.rl.shared.model.responses;
 
 import org.rl.shared.model.PostState;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -12,6 +13,6 @@ import java.time.LocalDateTime;
  * @param creationDate Creation/Publishing date of the post
  * @param state State of the post
  */
-public record PostResponse(Integer id, String title, String content, LocalDateTime creationDate, PostState state) {
+public record PostResponse(Integer id, String title, String content, LocalDateTime creationDate, PostState state) implements Serializable {
 
 }

@@ -8,6 +8,9 @@ import org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties;
 import org.springframework.boot.web.embedded.tomcat.ConfigurableTomcatWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.RequestRateLimiterGatewayFilterFactory;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +44,9 @@ public class GatewayConfig {
     @Autowired
     private SecurityFilter securityFilter;
 
+    @Autowired
+    private KeyResolver keyResolver;
+
     /**
      * Gateway route configuration
      * @param builder Builder object for the routes
@@ -50,6 +56,8 @@ public class GatewayConfig {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(route -> route.path("/api/v1/auth/login")
+                        //.filters(filter -> filter.requestRateLimiter(rateLimiter -> rateLimiter
+                        //                .setKeyResolver(this.keyResolver)))
                         .uri(authUrl))
                 .route(route -> route.path("/api/v1/auth/expiration")
                         .filters(filter -> filter.filter(securityFilter))

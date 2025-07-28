@@ -18,6 +18,13 @@ spring:
     multipart:
       max-file-size: 1MB
       max-request-size: 10MB
+  data:
+    redis:
+      host: ${VALKEY}
+      port: 6379
+  cache:
+    redis:
+      time-to-live: 10m
 
 logging:
   level:

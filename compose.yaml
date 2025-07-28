@@ -58,16 +58,19 @@ services:
       - ./api-service/src/main:/wd/api-service/src/main
       - ./shared/src/main:/wd/shared/src/main
       - ./target:/wd/target
+      - ./api-service/uploaded-resources:/wd/api-service/uploaded-resources
     restart: no
     environment:
       - SPRING_DATASOURCE_URL=$DB_URL
       - SPRING_DATASOURCE_USERNAME=$DB_USER
       - SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - VALKEY=valkey
       - LOGGING_LEVEL=$LOGGING_LEVEL
       - DEVTOOLS=$DEVTOOLS
     depends_on:
       - database
+      - valkey
     networks:
       - blog-net
 
@@ -100,6 +103,14 @@ services:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASSWORD
+    networks:
+      - blog-net
+
+  valkey:
+    image: valkey/valkey:8.0-alpine
+    container_name: valkey
+    ports:
+      - "6379:6379"
     networks:
       - blog-net
 

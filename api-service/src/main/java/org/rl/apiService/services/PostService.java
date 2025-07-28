@@ -5,7 +5,10 @@ import org.rl.apiService.model.Post;
 import org.rl.apiService.repositories.PostRepository;
 import org.rl.shared.model.PostState;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
