@@ -62,6 +62,7 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Add Error page
 - [x] Add Valkey caching
 - [x] Add rate limiter (Using NGINX ingress)
+- [x] Fix Vue duplicating requests
 - [ ] Try deploying it somewhere
 - [ ] Add notification system to frontend
 - [ ] Add JSDoc

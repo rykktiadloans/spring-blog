@@ -25,11 +25,12 @@ let pushNewPosts = async () => {
   isProcessing.value = false;
   if (tempPosts.length < 20) {
     stopLoading.value = true;
+    console.log("STOPPED")
   }
 };
 
 onMounted(async () => {
-  await pushNewPosts();
+ // await pushNewPosts();
 });
 
 const { reset } = useInfiniteScroll(
