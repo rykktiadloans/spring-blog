@@ -8,6 +8,7 @@ import { onMounted } from "vue";
 import Loading from "../components/Loading.vue";
 import PostComponent from "../components/PostComponent.vue";
 import { computed } from "vue";
+import "../assets/common.css";
 
 const route = useRoute();
 const router = useRouter();
@@ -23,7 +24,12 @@ const jwtToken = store.jwtToken;
 const post: Ref<Post | null> = ref(null);
 
 onMounted(async () => {
-  post.value = await postRepository.fetchPostById(postId);
+  try {
+    post.value = await postRepository.fetchPostById(postId);
+  }
+  catch(e) {
+    router.push("/404");
+  }
 });
 
 let canEdit = computed(() => jwtToken != null);
@@ -36,9 +42,29 @@ let edit = () => {
 <template>
   <main>
     <Loading v-if="post == null" />
-    <template v-else>
-      <button v-if="canEdit" @click="edit">Edit</button>
-      <PostComponent :post="post" />
-    </template>
+    <Transition name="slide">
+      <div v-if="post != null">
+        <button v-if="canEdit" @click="edit">Edit</button>
+        <PostComponent :post="post" />
+      </div>
+    </Transition>
   </main>
 </template>
+
+<style scoped>
+main {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all var(--loading-timing) ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateY(5em);
+  opacity: 0;
+}
+</style>

@@ -3,6 +3,8 @@ import { ref, type Ref } from "vue";
 import { useRepositoriesStore } from "../stores/repositories.store";
 import { useRouter } from "vue-router";
 import type { UserCredentials } from "../model/user";
+import Loading from "../components/Loading.vue";
+import "../assets/common.css";
 
 const repositories = useRepositoriesStore();
 const router = useRouter();
@@ -42,7 +44,7 @@ const loginCallback = async () => {
         <input type="text" id="password" v-model="password" />
       </div>
       <input type="submit" value="Login" @click.prevent="loginCallback" />
-      <p v-if="isLoading">LOADING...</p>
+      <p v-if="isLoading"><Loading/></p>
       <p v-if="error.length !== 0">{{ error }}</p>
     </form>
   </main>
@@ -54,6 +56,17 @@ main,
 .form-item {
   display: flex;
   flex-flow: column nowrap;
+}
+
+input{
+  background-color: var(--form-input-bg);
+  border: 2px solid var(--form-input-border);
+  border-radius: 5px;
+  color: var(--form-input-fg);
+}
+
+input[type=submit] {
+  padding: 0.4em;
 }
 
 main, .form {

@@ -6,6 +6,6 @@ const repositories = useRepositoriesStore();
 
 <template>
   <main>
-    <h1>See anything you like?</h1>
+    <h1>I'll figure out what to put here later I guess.</h1>
   </main>
 </template>
