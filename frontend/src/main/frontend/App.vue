@@ -48,11 +48,14 @@ nav {
 nav a:any-link {
   color: var(--link-fg);
   text-decoration: none;
+  transition: text-shadow var(--link-glow-timing) ease-out;
 }
 
 nav a:any-link:hover {
   color: var(--link-fg-hover);
+  text-shadow: 0px 0px 1em var(--link-fg-hover);
   text-decoration: none;
+  transition: text-shadow var(--link-glow-timing) ease-out;
 }
 
 .title::before {
@@ -69,6 +72,7 @@ nav a:any-link:hover {
   padding: 10px;
   height: calc(100vh - 2em);
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
+  background-color: var(--main-bg);
 }
 </style>

@@ -2,16 +2,14 @@
 import { ref, type Ref } from "vue";
 import { useRepositoriesStore } from "../stores/repositories.store";
 import { useRoute, useRouter } from "vue-router";
-import PostContent from "../components/PostContent.vue";
-import { watch } from "vue";
 import { Post } from "../model/post";
 import PostComponent from "../components/PostComponent.vue";
 import { computed } from "vue";
 import { onMounted } from "vue";
-import StatusCodes from "../model/statusCodes";
-import { useFileDialog } from "@vueuse/core";
-import { templateRef } from "@vueuse/core";
 import { useTemplateRef } from "vue";
+import "../assets/common.css";
+import Card from "../components/Card.vue";
+import CardError from "../components/ErrorCard.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -156,22 +154,22 @@ const onDraftClick = async () => {
 
 
       <div class="bad-image-container">
-        <div class="bad-image" v-for="image in badImages" :key="image">
+        <Card v-for="image in badImages" :key="image">
           <p>Image "{{ getImageName(image) }}" does not exist.</p>
           <button @click.prevent="onUploadClick(image)">Upload</button>
-        </div>
+        </Card>
       </div>
       <div class="bad-image-help" v-if="badImages.length != 0">
         Remember: an image can be accessed with "/resources/{image name}"
       </div>
 
       <div class="error-container" v-if="errors.length > 0">
-        <div class="error" v-for="error, index in errors" :key="index">
+        <CardError v-for="error, index in errors" :key="index">
           {{error}}
-        </div>
+        </CardError>
       </div>
 
-      <button @click.prevent="validateImages">Validate images</button>
+      <input type="submit" value="Validate images" @click.prevent="validateImages" />
       <input type="submit" value="Publish" @click.prevent="onPublishClick" />
       <input type="submit" value="Save/Move to Draft" @click.prevent="onDraftClick" />
 
@@ -192,8 +190,11 @@ main {
 }
 
 .form, .content {
-  border: 2px solid black;
   padding: 0.5em;
+}
+
+.form {
+  border-right: 2px solid var(--newpost-form-bg);
 }
 
 .content {
@@ -218,9 +219,19 @@ main {
 }
 
 .bad-image-help {
-  border: 2px solid red;
-  border-radius: 15px;
   padding: 0.5em;
+  color: var(--warn)
+}
+
+input, textarea, button{
+  background-color: var(--form-input-bg);
+  border: 2px solid var(--form-input-border);
+  border-radius: 5px;
+  color: var(--form-input-fg);
+}
+
+input[type=submit] {
+  padding: 0.4em;
 }
 
 </style>

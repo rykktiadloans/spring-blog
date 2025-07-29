@@ -47,7 +47,7 @@ public class PostController {
      * @param page The size and offset of the query
      * @return List of {@link PostResponse}
      */
-    @Cacheable(value = "postsCache")
+    @Cacheable(value = "anyPostsCache")
     @PostMapping(value = "/anystate")
     public List<PostResponse> getPostsWithState(Pageable page) {
         return this.postService.getByPage(page).stream()
@@ -81,7 +81,10 @@ public class PostController {
      * @param postDto A valid Post DTO
      * @return The new post
      */
-    @CacheEvict(value = "postsCache", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "postsCache", allEntries = true),
+            @CacheEvict(value = "anyPostsCache", allEntries = true)
+    })
     @PostMapping("")
     public PostResponse postNewPost(@Valid @RequestBody PostRequest postDto) {
         Post post = Post.builder()
@@ -100,7 +103,9 @@ public class PostController {
      */
     @Caching(evict = {
             @CacheEvict(value = "postCache", key = "#postDto.id"),
-            @CacheEvict(value = "postsCache", allEntries = true)
+            @CacheEvict(value = "postsCache", allEntries = true),
+            @CacheEvict(value = "postsCache", allEntries = true),
+            @CacheEvict(value = "anyPostsCache", allEntries = true)
     })
     @PutMapping("")
     public PostResponse putNewPost(@Valid @RequestBody PostRequest postDto) {

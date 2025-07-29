@@ -1,9 +1,67 @@
 :root {
-  --title: "Owner";
-  --header-bg: #131313;
-  --header-fg: #ffffff;
-  --link-fg: #00cc66;
-  --link-fg-hover: #00ee77;
+  /* Dracula theme color variables taken from https://github.com/Mofiqul/dracula.nvim */
+  --dracula-bg: #282A36;
+  --dracula-fg: #F8F8F2;
+  --dracula-selection: #44475A;
+  --dracula-comment: #6272A4;
+  --dracula-red: #FF5555;
+  --dracula-orange: #FFB86C;
+  --dracula-yellow: #F1FA8C;
+  --dracula-green: #50fa7b;
+  --dracula-purple: #BD93F9;
+  --dracula-cyan: #8BE9FD;
+  --dracula-pink: #FF79C6;
+  --dracula-bright-red: #FF6E6E;
+  --dracula-bright-green: #69FF94;
+  --dracula-bright-yellow: #FFFFA5;
+  --dracula-bright-blue: #D6ACFF;
+  --dracula-bright-magenta: #FF92DF;
+  --dracula-bright-cyan: #A4FFFF;
+  --dracula-bright-white: #FFFFFF;
+  --dracula-menu: #21222C;
+  --dracula-visual: #3E4452;
+  --dracula-gutter-fg: #4B5263;
+  --dracula-nontext: #3B4048;
+  --dracula-white: #ABB2BF;
+  --dracula-black: #191A21;
+
+  /* Name of the blog owner */
+  --title: "rykktiadLoans";
+
+  --warn: var(--dracula-orange);
+
+  --header-bg: var(--dracula-selection);
+  --header-fg: var(--dracula-fg);
+
+  --body-bg: var(--dracula-menu);
+
+  --main-bg: var(--dracula-bg);
+  --main-fg: var(--dracula-fg);
+
+  --link-fg: var(--dracula-green);
+  --link-fg-hover: var(--dracula-bright-green);
+
+  --link-glow-timing: 0.3s;
+
+  --card-border: 2px solid var(--link-fg);
+  --card-border-radius: 5px;
+  --card-bg-hover: var(--dracula-selection);
+  --card-hover-timing: 0.3s;
+
+  --card-error: var(--dracula-red);
+  --card-error-border: 2px solid var(--card-error);
+
+  --date-fg: var(--dracula-white);
+
+  --loading-focus: var(--dracula-green);
+  --loading-timing: 0.5s;
+
+  --form-input-bg: var(--dracula-selection);
+  --form-input-fg: var(--dracula-fg);
+  --form-input-border: var(--dracula-green);
+
+  --newpost-form-bg: var(--dracula-selection);
+
 }
 
 * {
@@ -13,4 +71,7 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: var(--body-bg);
+  color: var(--main-fg);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

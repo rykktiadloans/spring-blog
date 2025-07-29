@@ -17,7 +17,7 @@ export class PostRepository {
     }
     let post = await fetch(`/api/v1/posts/${id}`)
       .then((response) => {
-        if (response.status == StatusCodes.NOT_FOUND) {
+        if (!response.ok) {
           throw new Error(`Post with ID ${id} could not be fetched`);
         }
         return response.json();
