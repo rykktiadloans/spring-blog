@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import { useRepositoriesStore } from "./stores/repositories.store";
+import NotificationList from "./components/NotificationList.vue";
 import "./assets/common.css";
 
 const repositories = useRepositoriesStore();
@@ -19,6 +20,9 @@ const repositories = useRepositoriesStore();
   </header>
 
   <div id="router-view-container">
+    <div class="notification-container">
+      <NotificationList class="notification-list"/>
+    </div>
     <RouterView id="router-view" />
   </div>
 </template>
@@ -74,5 +78,21 @@ nav a:any-link:hover {
   width: 100%;
   max-width: 1000px;
   background-color: var(--main-bg);
+}
+
+.notification-container {
+  position: fixed;
+  pointer-events: none;
+  width: 100%;
+  height: calc(100vh - 2em);
+}
+
+.notification-list {
+  max-width: 20em;
+  width: 100%;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  pointer-events: all;
 }
 </style>

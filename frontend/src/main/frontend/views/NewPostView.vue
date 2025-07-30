@@ -11,11 +11,14 @@ import "../assets/common.css";
 import Card from "../components/Card.vue";
 import CardError from "../components/ErrorCard.vue";
 import { useTitle } from "@vueuse/core";
+import { useNotificationsStore } from "../stores/notifications.store";
+import { NotificationType } from "../model/notification";
 
 const router = useRouter();
 const route = useRoute();
 const repositories = useRepositoriesStore();
 const resourceRepository = repositories.resourceRepository;
+const { notify } = useNotificationsStore();
 
 
 function getAllImages(content: string): string[] {
@@ -101,7 +104,9 @@ const onUploadClick = async (imageName: string) => {
       throw new Error("No files selected");
     }
     if (files[0].name != imageName.split("/").pop()) {
-      throw new Error(`Wrong filename. ${imageName} is needed, while ${files[0].name} is supplied`);
+      const text = `Wrong filename. ${imageName} is needed, while ${files[0].name} is supplied`;
+      notify(text, NotificationType.ERROR);
+      throw new Error(text);
     }
     const name = imageName.split("/").pop();
     if (name == undefined) {
@@ -110,7 +115,9 @@ const onUploadClick = async (imageName: string) => {
 
     const resource = await resourceRepository.postImage(files[0]);
     if(resource == null) {
-      alert(`${name} is too large!`) // TODO: add a proper notification system
+      const text = `${name} is too large!`;
+      notify(text, NotificationType.ERROR);
+      throw new Error(text);
     }
     await validateImages();
   };

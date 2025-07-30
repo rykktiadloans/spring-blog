@@ -65,7 +65,7 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Fix Vue duplicating requests
 - [x] Proper styling
 - [x] Add some actual content on the home page
-- [ ] Add notification system to frontend
+- [x] Add notification system to frontend
 - [ ] Try deploying it somewhere
 - [ ] Add JSDoc
 - [ ] Add more tests

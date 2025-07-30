@@ -29,6 +29,7 @@
   --title: "rykktiadLoans";
 
   --warn: var(--dracula-orange);
+  --error: var(--dracula-red);
 
   --header-bg: var(--dracula-selection);
   --header-fg: var(--dracula-fg);
@@ -48,7 +49,7 @@
   --card-bg-hover: var(--dracula-selection);
   --card-hover-timing: 0.3s;
 
-  --card-error: var(--dracula-red);
+  --card-error: var(--error);
   --card-error-border: 2px solid var(--card-error);
 
   --date-fg: var(--dracula-white);
@@ -63,6 +64,8 @@
   --newpost-form-bg: var(--dracula-selection);
 
   --image-radius: 20px;
+
+  --notif-bg: var(--dracula-selection);
 
 }
 

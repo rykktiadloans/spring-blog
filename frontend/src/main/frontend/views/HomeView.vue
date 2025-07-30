@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { useRepositoriesStore } from "../stores/repositories.store";
+import { useNotificationsStore } from "../stores/notifications.store";
+import { type Notification, NotificationType} from "../model/notification";
 import "../assets/common.css";
 import type { Ref } from "vue";
 import type { Post } from "../model/post";
 import { ref } from "vue";
 import Loading from "../components/Loading.vue";
 import PostCard from "../components/PostCard.vue";
+import NotificationComponent from "../components/NotificationComponent.vue";
 import { onMounted } from "vue";
-import { useTitle } from "@vueuse/core";
+import { rand, useTitle } from "@vueuse/core";
+import { computed } from "vue";
 
 const repositories = useRepositoriesStore();
 const postRepository = repositories.postRepository;
@@ -22,6 +26,7 @@ onMounted(async () => {
   posts.value = newPosts.slice(0, 5);
   isProcessing.value = false;
 });
+
 </script>
 
 <template>
