@@ -9,6 +9,7 @@ import Loading from "../components/Loading.vue";
 import PostComponent from "../components/PostComponent.vue";
 import { computed } from "vue";
 import "../assets/common.css";
+import { useTitle } from "@vueuse/core";
 
 const route = useRoute();
 const router = useRouter();
@@ -23,9 +24,12 @@ const jwtToken = store.jwtToken;
 
 const post: Ref<Post | null> = ref(null);
 
+const title = useTitle("Loading post...");
+
 onMounted(async () => {
   try {
     post.value = await postRepository.fetchPostById(postId);
+    title.value = post.value.title;
   }
   catch(e) {
     router.push("/404");

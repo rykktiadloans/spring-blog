@@ -10,11 +10,13 @@ import { useTemplateRef } from "vue";
 import "../assets/common.css";
 import Card from "../components/Card.vue";
 import CardError from "../components/ErrorCard.vue";
+import { useTitle } from "@vueuse/core";
 
 const router = useRouter();
 const route = useRoute();
 const repositories = useRepositoriesStore();
 const resourceRepository = repositories.resourceRepository;
+
 
 function getAllImages(content: string): string[] {
   const images: string[] = [];
@@ -52,6 +54,8 @@ As you can see, this thing supports Markdown.
 const badImages: Ref<string[]> = ref([]);
 const fileInput = useTemplateRef("fileInput");
 const errors: Ref<string[]> = ref([]);
+
+const pageTitle = useTitle(`New: ${title.value}`)
 
 onMounted(async () => {
   if (typeof route.query["post"] == "string") {
@@ -108,6 +112,7 @@ const onUploadClick = async (imageName: string) => {
     if(resource == null) {
       alert(`${name} is too large!`) // TODO: add a proper notification system
     }
+    await validateImages();
   };
   input.click();
 };

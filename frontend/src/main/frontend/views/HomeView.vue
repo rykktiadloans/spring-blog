@@ -7,12 +7,15 @@ import { ref } from "vue";
 import Loading from "../components/Loading.vue";
 import PostCard from "../components/PostCard.vue";
 import { onMounted } from "vue";
+import { useTitle } from "@vueuse/core";
 
 const repositories = useRepositoriesStore();
 const postRepository = repositories.postRepository;
 
 const posts: Ref<Post[]> = ref([]);
 const isProcessing = ref(true);
+
+const title = useTitle("Home");
 
 onMounted(async () => {
   const newPosts = await postRepository.fetchPostsByPage(0);
@@ -35,7 +38,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-
 h2, h3 {
   text-align: center;
 }

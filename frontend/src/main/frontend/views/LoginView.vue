@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import type { UserCredentials } from "../model/user";
 import Loading from "../components/Loading.vue";
 import "../assets/common.css";
+import { useTitle } from "@vueuse/core";
 
 const repositories = useRepositoriesStore();
 const router = useRouter();
@@ -13,6 +14,8 @@ const username = ref("");
 const password = ref("");
 const isLoading = ref(false);
 const error = ref("");
+
+const title = useTitle("Login")
 
 const loginCallback = async () => {
   isLoading.value = true;
