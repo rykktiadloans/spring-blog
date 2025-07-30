@@ -64,9 +64,9 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Add rate limiter (Using NGINX ingress)
 - [x] Fix Vue duplicating requests
 - [x] Proper styling
-- [ ] Add some actual content on the home page
-- [ ] Try deploying it somewhere
+- [x] Add some actual content on the home page
 - [ ] Add notification system to frontend
+- [ ] Try deploying it somewhere
 - [ ] Add JSDoc
 - [ ] Add more tests
 - [ ] Add summaries to posts

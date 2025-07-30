@@ -62,6 +62,8 @@
 
   --newpost-form-bg: var(--dracula-selection);
 
+  --image-radius: 20px;
+
 }
 
 * {
