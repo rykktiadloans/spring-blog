@@ -20,6 +20,7 @@ img {
   max-width: 60vh;
   display: block;
   margin: auto;
+  border-radius: var(--image-radius);
 }
 
 a:any-link {

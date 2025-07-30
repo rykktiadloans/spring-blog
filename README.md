@@ -15,6 +15,16 @@ The application consists of 4 microsevrices, not counting a database container. 
 - Owner can also save images to drafts.
 - Any published post can be viewed by any user.
 
+## Screenshots
+
+![An example of a post page](./readme-res/post.png)
+
+![An example of a page with a list of posts](./readme-res/posts.png)
+
+![An example of a page for creating a new post](./readme-res/new-post.png)
+
+![An example of a login page](./readme-res/login.png)
+
 ## Running it
 
 ### Docker Compose Dev Build
@@ -64,9 +74,9 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Add rate limiter (Using NGINX ingress)
 - [x] Fix Vue duplicating requests
 - [x] Proper styling
-- [ ] Add some actual content on the home page
+- [x] Add some actual content on the home page
+- [x] Add notification system to frontend
 - [ ] Try deploying it somewhere
-- [ ] Add notification system to frontend
 - [ ] Add JSDoc
 - [ ] Add more tests
 - [ ] Add summaries to posts

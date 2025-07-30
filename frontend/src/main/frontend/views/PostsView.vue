@@ -4,7 +4,7 @@ import { Post } from "../model/post";
 import { useRepositoriesStore } from "../stores/repositories.store";
 import Loading from "../components/Loading.vue";
 import PostCard from "../components/PostCard.vue";
-import { useInfiniteScroll, useWindowScroll, useWindowSize } from "@vueuse/core";
+import { useInfiniteScroll, useTitle, useWindowScroll, useWindowSize } from "@vueuse/core";
 import { watch } from "vue";
 import { useTemplateRef } from "vue";
 
@@ -16,6 +16,8 @@ const page = ref(0);
 const isProcessing = ref(true);
 const stopLoading = ref(false);
 const postList = useTemplateRef("postList");
+
+const title = useTitle("Posts");
 
 let pushNewPosts = async () => {
   isProcessing.value = true;
