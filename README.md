@@ -15,6 +15,16 @@ The application consists of 4 microsevrices, not counting a database container. 
 - Owner can also save images to drafts.
 - Any published post can be viewed by any user.
 
+## Screenshots
+
+![An example of a post page](./readme-res/post.png)
+
+![An example of a page with a list of posts](./readme-res/posts.png)
+
+![An example of a page for creating a new post](./readme-res/new-post.png)
+
+![An example of a login page](./readme-res/login.png)
+
 ## Running it
 
 ### Docker Compose Dev Build
