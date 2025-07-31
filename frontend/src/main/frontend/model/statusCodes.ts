@@ -1,3 +1,6 @@
+/**
+ * All the possible HTTP status codes
+ */
 enum StatusCodes {
   CONTINUE = 100,
   SWITCHING_PROTOCOLS = 101,

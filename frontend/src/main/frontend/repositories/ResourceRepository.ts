@@ -1,15 +1,31 @@
 import StatusCodes from "../model/statusCodes";
 
+/**
+ * A repository object for accessing the resources API
+ */
 export class ResourceRepository {
+
+  /**
+   * A JWT token used for authorization
+   * */
   jwtToken: string | null;
 
-  constructor(jwtToken?: string, csrf?: string) {
+  /**
+   * @constructor
+   * @param jwtToken - An optional JWT token
+   */
+  constructor(jwtToken?: string) {
     if (jwtToken == null) {
       this.jwtToken = null;
     }
     this.jwtToken = jwtToken!;
   }
 
+  /**
+   * Check if a resource with a specific name exists
+   * @param name - Name of the resource
+   * @returns Boolean promise
+   */
   async checkResourceExistsByName(name: string): Promise<boolean> {
     if (!name.startsWith("/resources/")) {
       throw new Error("Name should have the form of '/resources/name.ext'");
@@ -28,6 +44,11 @@ export class ResourceRepository {
     return resource;
   }
 
+  /**
+   * A function for uploading a File to the backend
+   * @param file - File to upload
+   * @returns The name of the new resource.
+   */
   async postImage(file: File): Promise<string | null> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");

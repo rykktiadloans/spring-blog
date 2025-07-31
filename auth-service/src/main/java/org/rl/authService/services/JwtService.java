@@ -29,6 +29,9 @@ public class JwtService {
 
     private final Logger logger = LogManager.getLogger(JwtService.class);
 
+    /**
+     * Set the key from the JWT secret
+     */
     @PostConstruct
     private void init() {
         this.key = Keys.hmacShaKeyFor(this.jwtSecret.getBytes(StandardCharsets.UTF_8));

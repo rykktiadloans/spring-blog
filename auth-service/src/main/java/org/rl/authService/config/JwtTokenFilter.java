@@ -32,6 +32,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final Logger logger = LogManager.getLogger(JwtService.class);
 
+    /**
+     * Process the request and add an authentication to it if the JWT token is present and valid.
+     * @param request HTTP Request
+     * @param response HTTP Response
+     * @param filterChain The Servlet filter chain
+     * @throws ServletException Can throw a Servlet exception
+     * @throws IOException Can throw an IO exception
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -52,6 +60,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Get the JWT token from the request
+     * @param request HTTP request
+     * @return A JWT token if present, null otherwise
+     */
     private String parseJwtToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if(authHeader != null && authHeader.startsWith("Bearer ")) {

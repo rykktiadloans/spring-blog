@@ -21,6 +21,9 @@ public class StorageService {
     @Autowired
     private StorageConfiguration storageConfiguration;
 
+    /**
+     * On start up, create a directory for uploads.
+     */
     @PostConstruct
     private void init() {
         try {

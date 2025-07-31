@@ -28,6 +28,10 @@ public class Resource {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    /**
+     * Create a ResourceResponse based on the object
+     * @return Analogous ResourceResponse
+     */
     public ResourceResponse toResponse() {
         return new ResourceResponse(this.getId(), this.getName());
     }

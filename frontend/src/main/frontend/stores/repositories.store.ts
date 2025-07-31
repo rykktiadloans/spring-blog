@@ -5,6 +5,15 @@ import { defineStore } from "pinia";
 import { onMounted, ref, watch, type Ref } from "vue";
 import { ResourceRepository } from "../repositories/ResourceRepository";
 
+/**
+ * A Pinia store for accessing the API
+ *
+ * @returns { PostRepository } postRepository Repository object for accessing the posts API.
+ * @returns { ResourceRepository } resourceRepository Repository object for accessing the resources API
+ * @returns { string } jwtToken JWT token
+ * @returns { UserCredentials } user Verified user credentials
+ * @returns { (credentials: UserCredentials) => Promise<User | null> } login Function to attempt to log into using user credentials
+ * */
 export const useRepositoriesStore = defineStore("repositories", () => {
   const postRepository = ref(new PostRepository());
   const resourceRepository = ref(new ResourceRepository());

@@ -1,16 +1,33 @@
 import { Post } from "../model/post";
 import StatusCodes from "../model/statusCodes";
 
+/**
+ * A class for accessing the posts API
+ */
 export class PostRepository {
+
+  /**
+   * A JWT token currently in use
+   * */
   jwtToken: string | null;
 
-  constructor(jwtToken?: string, csrf?: string) {
+  /**
+   * A constructor for the object
+   * @constructor
+   * @param jwtToken - Optional JWT token
+   */
+  constructor(jwtToken?: string) {
     if (jwtToken == null) {
       this.jwtToken = null;
     }
     this.jwtToken = jwtToken!;
   }
 
+  /**
+   * A function for fetching a post. Can only fetch published posts without a JWT token
+   * @param id - ID of the post
+   * @returns Post promise
+   */
   async fetchPostById(id: number): Promise<Post> {
     if (this.jwtToken != null) {
       return this.fetchAnyPostById(id);
@@ -30,6 +47,11 @@ export class PostRepository {
     return post;
   }
 
+  /**
+   * An internal function for fetching post with any state.
+   * @param id - ID of the post
+   * @returns Post promise
+   */
   private async fetchAnyPostById(id: number): Promise<Post> {
     let post = await fetch(`/api/v1/posts/anystate/${id}`, {
       method: "POST",
@@ -50,6 +72,14 @@ export class PostRepository {
     }
     return post;
   }
+
+
+  /**
+   * Fetch a list of posts on a specific page. Can only fetch published posts if the JWT token is
+   * absent
+   * @param page - Page to request
+   * @returns Promise of a list of posts
+   */
   async fetchPostsByPage(page: number): Promise<Post[]> {
     if (this.jwtToken != null) {
       return this.fetchAllPostsByPage(page);
@@ -61,6 +91,11 @@ export class PostRepository {
     return posts;
   }
 
+  /**
+   * Fetches posts of all states by their page
+   * @param page - Page to request
+   * @returns Promise of a list of posts
+   */
   private async fetchAllPostsByPage(page: number): Promise<Post[]> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");
@@ -77,6 +112,11 @@ export class PostRepository {
     return posts;
   }
 
+  /**
+   * Send a list of posts to the API. If the id is set, then PUTs it, uses POST otherwise
+   * @param post - Post to send
+   * @returns An updated post
+   */
   async sendPost(post: Post): Promise<Post | null> {
     if (this.jwtToken == null) {
       throw new Error("No JWT token has been provided");
