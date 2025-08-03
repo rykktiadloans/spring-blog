@@ -25,6 +25,7 @@ dependencies {
 	implementation("org.hibernate.validator:hibernate-validator")
 	implementation("org.springframework.boot:spring-boot-starter-cache")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+	implementation("com.rometools:rome:2.1.0")
 	runtimeOnly("org.postgresql:postgresql")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
