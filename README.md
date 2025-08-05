@@ -76,11 +76,11 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Proper styling
 - [x] Add some actual content on the home page
 - [x] Add notification system to frontend
-- [ ] Add RSS
+- [x] Add RSS
+- [x] Add JSDoc
+- [ ] Add OpenAPI
 - [ ] Try deploying it somewhere
-- [ ] Add JSDoc
 - [ ] Add more tests
 - [ ] Add summaries to posts
 - [ ] Add general purpose file storage system
-- [ ] Add OpenAPI
 - [ ] Add post comment section
