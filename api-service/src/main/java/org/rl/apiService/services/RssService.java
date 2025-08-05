@@ -13,12 +13,19 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A service class responsible for serving RSS feeds
+ */
 @Service
 public class RssService {
 
     @Autowired
     private PostService postService;
 
+    /**
+     * Fetches the last 20 published posts and returns them as an RSS channel
+     * @return RSS channel with the last 20 posts.
+     */
     public Channel getView() {
         List<Post> posts = this.postService.getByPageWhereState(PostState.PUBLISHED, Pageable.ofSize(20));
 
@@ -44,7 +51,6 @@ public class RssService {
 
 
         channel.setItems(postItems);
-        //Like more Entries here about different new topics
         return channel;
 
     }

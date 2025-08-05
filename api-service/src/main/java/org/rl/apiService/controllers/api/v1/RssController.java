@@ -8,12 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.View;
 
+/**
+ * A controller responsible for serving RSS feeds.
+ */
 @RestController
 @RequestMapping(path = "/api/v1/rss")
 public class RssController {
     @Autowired
     private RssService rssService;
 
+    /**
+     * Return the RSS feed
+     * @return RSS feed
+     */
     @GetMapping("")
     public Channel getFeed() {
         return this.rssService.getView();
