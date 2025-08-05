@@ -26,3 +26,10 @@ server:
   port: 8083
   error:
     include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

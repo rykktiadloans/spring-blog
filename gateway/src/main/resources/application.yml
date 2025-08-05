@@ -24,3 +24,10 @@ services:
   api: ${API_URL}
   frontend: ${FRONTEND_URL}
   auth: ${AUTH_URL}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
