@@ -21,6 +21,10 @@ server:
 services:
   api: ${GATEWAY_URL}
 
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+
 management:
   endpoints:
     web:

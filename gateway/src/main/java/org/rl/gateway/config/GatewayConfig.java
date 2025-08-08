@@ -81,8 +81,17 @@ public class GatewayConfig {
                 .route(route -> route.path("/owner/newpost")
                         .filters(filter -> filter.filter(securityFilter))
                         .uri(frontendUrl))
-                .route(route -> route.alwaysTrue()
+                .route(route -> route.path("/api/v3/**")
+                        .filters(filter -> filter.stripPrefix(1))
+                        .uri(apiUrl))
+                .route(route -> route.path("/auth/v3/**")
+                        .filters(filter -> filter.stripPrefix(1))
+                        .uri(authUrl))
+                .route(route -> route.path("/frontend/v3/**")
+                        .filters(filter -> filter.stripPrefix(1))
                         .uri(frontendUrl))
+                //.route(route -> route.alwaysTrue()
+                //        .uri(frontendUrl))
                 .build();
     }
 

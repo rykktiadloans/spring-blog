@@ -1,6 +1,8 @@
 package org.rl.apiService.controllers.api.v1;
 
 import com.rometools.rome.feed.rss.Channel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.rl.apiService.services.RssService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.View;
  */
 @RestController
 @RequestMapping(path = "/api/v1/rss")
+@Tag(name = "rss_api_controller", description = "API for accessing the RSS feed")
 public class RssController {
     @Autowired
     private RssService rssService;
@@ -22,6 +25,7 @@ public class RssController {
      * @return RSS feed
      */
     @GetMapping("")
+    @Operation(summary = "Returns an RSS feed of the last 20 posts")
     public Channel getFeed() {
         return this.rssService.getView();
     }
