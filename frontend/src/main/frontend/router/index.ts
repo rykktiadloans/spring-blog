@@ -4,7 +4,7 @@ import PostsView from "../views/PostsView.vue";
 import PostView from "../views/PostView.vue";
 import LoginView from "../views/LoginView.vue";
 import NewPostView from "../views/NewPostView.vue";
-import NotFoundView from "../views/NotFoundView.vue";
+import ErrorView from "../views/ErrorView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,9 +36,9 @@ const router = createRouter({
       component: NewPostView
     },
     {
-      path: "/:pathMatch(.*)*",
-      name: "notfound",
-      component: NotFoundView
+      path: "/err",
+      name: "error",
+      component: ErrorView
     }
   ],
 });

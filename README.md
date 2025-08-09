@@ -83,7 +83,7 @@ OpenAPI reference can be obtained from a server at `/api/v1/swagger-ui`.
 - [x] Add JSDoc
 - [x] Figure out how to do actuators
 - [x] Add OpenAPI
-- [ ] Refix the "Not Found" issue
+- [x] Refix the "Not Found" issue
 - [ ] Try deploying it somewhere
 - [ ] Add more tests
 - [ ] Add summaries to posts

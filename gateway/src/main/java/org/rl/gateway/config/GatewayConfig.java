@@ -1,6 +1,7 @@
 package org.rl.gateway.config;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.rl.gateway.filters.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.reactive.result.view.UrlBasedViewResolver;
+import org.springframework.web.reactive.result.view.ViewResolver;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -90,8 +93,8 @@ public class GatewayConfig {
                 .route(route -> route.path("/frontend/v3/**")
                         .filters(filter -> filter.stripPrefix(1))
                         .uri(frontendUrl))
-                //.route(route -> route.alwaysTrue()
-                //        .uri(frontendUrl))
+                .route(route -> route.path("/err")
+                        .uri(frontendUrl))
                 .build();
     }
 

@@ -27,10 +27,10 @@ public class HomeController {
     }
 
     /**
-     * Return the page when something is not found
+     * Return the page when there is some sort of an error
      * @return Error page
      */
-    @GetMapping("/404")
+    @GetMapping("/err")
     @Operation(summary = "Returns the frontend")
     String getNotFound() {
         return "forward:/index.html";
