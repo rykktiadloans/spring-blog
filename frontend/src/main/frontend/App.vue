@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from "vue-router";
 import { useRepositoriesStore } from "./stores/repositories.store";
 import NotificationList from "./components/NotificationList.vue";
 import "./assets/common.css";
+import rssIcon from "./assets/rss.png";
 
 const repositories = useRepositoriesStore();
 </script>
@@ -15,6 +16,9 @@ const repositories = useRepositoriesStore();
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/posts">Posts</RouterLink>
         <RouterLink to="/owner/newpost" v-if="repositories.user != null">New Post</RouterLink>
+        <a href="/rss" class="rss">
+          <img :src="rssIcon" alt="RSS">
+        </a>
       </nav>
     </div>
   </header>
@@ -43,6 +47,14 @@ nav {
   flex-flow: row nowrap;
   width: 100%;
   gap: 0.5em;
+}
+
+.rss {
+  margin-left: auto;
+}
+
+.rss > img {
+  max-height: 1.5em;
 }
 
 .title {

@@ -34,3 +34,14 @@ server:
   port: 8081
   error:
     include-stacktrace: never
+
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health

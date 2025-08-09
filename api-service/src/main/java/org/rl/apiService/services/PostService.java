@@ -7,6 +7,7 @@ import org.rl.shared.model.PostState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class PostService {
     @Autowired
     private PostRepository postRepository;
+
 
     /**
      * Return a post with the specific ID

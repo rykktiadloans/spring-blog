@@ -1,5 +1,8 @@
 package org.rl.apiService.controllers.api.v1;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.val;
@@ -27,6 +30,7 @@ import java.nio.file.Files;
 @RestController
 @RequestMapping(path = "/api/v1/resources")
 @Validated
+@Tag(name = "resource_api_controller", description = "API for accessing resources")
 public class ResourceController {
     @Autowired
     private ResourceService resourceService;
@@ -37,6 +41,7 @@ public class ResourceController {
      * @return The contents resource
      */
     @GetMapping(value = "/{name}")
+    @Operation(summary = "Returns the contents of a resource")
     public ResponseEntity<FileSystemResource> getResource(@PathVariable(name = "name") String name) {
         Resource resource = this.resourceService.getByName(name);
         File file = this.resourceService.getFileFromResource(resource);
@@ -57,6 +62,8 @@ public class ResourceController {
      * @return The new resource
      */
     @PostMapping(value = "")
+    @Operation(summary = "Create a new resource based on a file. *Requires Authorization*")
+    @SecurityRequirement(name = "Bearer Authentication")
     public ResourceResponse postResource(@RequestBody @NotNull MultipartFile file) {
         return this.resourceService.save(file).toResponse();
     }

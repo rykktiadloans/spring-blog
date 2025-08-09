@@ -50,6 +50,9 @@ In order for the Docker Compose to run, the following environmental variables ne
 | LOGGING_LEVEL          | `DEBUG`                                                    | Logging level of all applications                              | 
 | DEVTOOLS               | `true`                                                     | Turn on reload on file change for all applications             |
 
+## API Reference
+
+OpenAPI reference can be obtained from a server at `/api/v1/swagger-ui`.
 
 ## To-do list
 - [x] Ability to post images
@@ -76,11 +79,13 @@ In order for the Docker Compose to run, the following environmental variables ne
 - [x] Proper styling
 - [x] Add some actual content on the home page
 - [x] Add notification system to frontend
+- [x] Add RSS
+- [x] Add JSDoc
+- [x] Figure out how to do actuators
+- [x] Add OpenAPI
+- [x] Refix the "Not Found" issue
 - [ ] Try deploying it somewhere
-- [ ] Add JSDoc
 - [ ] Add more tests
 - [ ] Add summaries to posts
 - [ ] Add general purpose file storage system
-- [ ] Add OpenAPI
-- [ ] Add RSS
 - [ ] Add post comment section

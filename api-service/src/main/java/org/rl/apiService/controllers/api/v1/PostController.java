@@ -1,5 +1,9 @@
 package org.rl.apiService.controllers.api.v1;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.hibernate.annotations.Cache;
 import org.rl.apiService.model.Post;
@@ -8,6 +12,7 @@ import org.rl.shared.model.PostState;
 import org.rl.apiService.model.api_dto.requests.PostRequest;
 import org.rl.shared.model.responses.PostResponse;
 import org.rl.apiService.services.PostService;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,6 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "/api/v1/posts", produces = "application/json")
+@Tag(name = "post_api_controller", description = "API for accessing posts")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -37,7 +43,8 @@ public class PostController {
      */
     @Cacheable(value = "postsCache")
     @GetMapping("")
-    public List<PostResponse> getPosts(Pageable page) {
+    @Operation(summary = "Get a page of published posts, sorted from newest to oldest")
+    public List<PostResponse> getPosts(@ParameterObject Pageable page) {
         return this.postService.getByPageWhereState(PostState.PUBLISHED, page).stream()
                 .map(Post::toResponse).toList();
     }
@@ -49,7 +56,9 @@ public class PostController {
      */
     @Cacheable(value = "anyPostsCache")
     @PostMapping(value = "/anystate")
-    public List<PostResponse> getPostsWithState(Pageable page) {
+    @Operation(summary = "Get a page of all posts, sorted from newest to oldest. *Requires Authorization*")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public List<PostResponse> getPostsWithState(@ParameterObject Pageable page) {
         return this.postService.getByPage(page).stream()
                 .map(Post::toResponse).toList();
     }
@@ -61,6 +70,7 @@ public class PostController {
      */
     @Cacheable(value = "postCache", key = "#id")
     @GetMapping("/{id}")
+    @Operation(summary = "Get a published post by its ID.")
     public PostResponse getPost(@PathVariable(name = "id") Integer id) {
         return this.postService.getByIdWhenPublished(id).toResponse();
     }
@@ -72,6 +82,8 @@ public class PostController {
      */
     @Cacheable(value = "postCache", key = "#id")
     @PostMapping("/anystate/{id}")
+    @Operation(summary = "Get any post by its ID. *Requires authorization*")
+    @SecurityRequirement(name = "Bearer Authentication")
     public PostResponse getPostAnyState(@PathVariable(name = "id") Integer id) {
         return this.postService.getById(id).toResponse();
     }
@@ -86,6 +98,8 @@ public class PostController {
             @CacheEvict(value = "anyPostsCache", allEntries = true)
     })
     @PostMapping("")
+    @Operation(summary = "Create a new post.")
+    @SecurityRequirement(name = "Bearer Authentication")
     public PostResponse postNewPost(@Valid @RequestBody PostRequest postDto) {
         Post post = Post.builder()
                 .title(postDto.title())
@@ -108,6 +122,9 @@ public class PostController {
             @CacheEvict(value = "anyPostsCache", allEntries = true)
     })
     @PutMapping("")
+    @Operation(summary = "Update an already existing post")
+    @ApiResponse(responseCode = "400", description = "Bad request, such as post ID being null")
+    @SecurityRequirement(name = "Bearer Authentication")
     public PostResponse putNewPost(@Valid @RequestBody PostRequest postDto) {
         if(postDto.id() == null) {
             throw new MissingEntityException("Post ID is null");
