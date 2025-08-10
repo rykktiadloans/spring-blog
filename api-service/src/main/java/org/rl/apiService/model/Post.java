@@ -77,13 +77,16 @@ public class Post {
     @Column(name = "state", nullable = false)
     private PostState state;
 
-//     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//     @JoinTable(
-//             name = "post_resources",
-//             joinColumns = { @JoinColumn(name = "post_id") },
-//             inverseJoinColumns = { @JoinColumn(name = "resource_id") }
-//     )
-//    private Set<Resource> resources = new HashSet<>();
+    /**
+     * Set of resources used in a post
+     */
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "post_resources",
+            joinColumns = { @JoinColumn(name = "post_id") },
+            inverseJoinColumns = { @JoinColumn(name = "resource_id") }
+    )
+    private Set<Resource> resources = new HashSet<>();
 
     /**
      * Create a {@link PostResponse} based on the contents of the post

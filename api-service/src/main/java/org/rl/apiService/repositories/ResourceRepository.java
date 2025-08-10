@@ -4,6 +4,7 @@ import org.rl.apiService.model.Resource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,4 +19,7 @@ public interface ResourceRepository extends JpaRepository<Resource, Integer> {
      * @return Specific resource
      */
     public Optional<Resource> findByName(String name);
+
+    public List<Resource> findByNameIn(List<String> names);
+
 }

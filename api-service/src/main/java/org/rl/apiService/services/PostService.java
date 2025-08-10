@@ -1,5 +1,8 @@
 package org.rl.apiService.services;
 
+import lombok.extern.slf4j.Slf4j;
+import org.rl.apiService.model.Resource;
+import org.rl.apiService.repositories.ResourceRepository;
 import org.rl.shared.exceptions.MissingEntityException;
 import org.rl.apiService.model.Post;
 import org.rl.apiService.repositories.PostRepository;
@@ -12,16 +15,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A service object for working with the posts
  */
 @Service
+@Slf4j
 public class PostService {
+
+    private final Pattern imagePattern = Pattern.compile("!\\[(.*)]\\((.+)\\)");
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private ResourceRepository resourceRepository;
 
 
     /**
@@ -80,6 +89,23 @@ public class PostService {
      * @return The saved post
      */
     public Post save(Post post) {
-        return this.postRepository.save(post);
+        Matcher matcher = this.imagePattern.matcher(post.getContent());
+        List<String> matches = new ArrayList<>();
+        while(matcher.find()) {
+            matches.add(matcher.group(2));
+        }
+        List<String> names = matches.stream()
+                .map(path -> {
+                    String[] split = path.split("/");
+                    return split[split.length - 1];
+                }).toList();
+        List<Resource> resources = this.resourceRepository.findByNameIn(names)
+                .stream().map(resource -> {
+                    resource.getPosts().add(post);
+                    return resource;
+                }).toList();
+        post.setResources(new HashSet<>(resources));
+        Post newPost = this.postRepository.save(post);
+        return newPost;
     }
 }

@@ -33,8 +33,11 @@ public class Resource {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-//    @ManyToMany(mappedBy = Post.Fields.resources)
-//    private Set<Post>posts = new HashSet<>();
+    /**
+     * Set of posts that use this resource
+     */
+    @ManyToMany(mappedBy = Post.Fields.resources)
+    private Set<Post> posts = new HashSet<>();
 
     public ResourceResponse toResponse() {
         return new ResourceResponse(this.getId(), this.getName());
