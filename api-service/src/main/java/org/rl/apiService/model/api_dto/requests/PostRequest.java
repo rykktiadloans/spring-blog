@@ -16,6 +16,7 @@ public record PostRequest(
         @Nullable Integer id,
         @NotBlank String title,
         @NotBlank String content,
+        @NotBlank String summary,
         @NotNull PostState state
         ) {
 }

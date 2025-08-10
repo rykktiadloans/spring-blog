@@ -84,8 +84,8 @@ OpenAPI reference can be obtained from a server at `/api/v1/swagger-ui`.
 - [x] Figure out how to do actuators
 - [x] Add OpenAPI
 - [x] Refix the "Not Found" issue
+- [x] Add summaries to posts
 - [ ] Try deploying it somewhere
 - [ ] Add more tests
-- [ ] Add summaries to posts
 - [ ] Add general purpose file storage system
 - [ ] Add post comment section

@@ -19,7 +19,7 @@ const click = () => {
 <template>
   <Card @click="click">
     <h3>{{post.state == "DRAFT" ? "DRAFT: " : ""}}{{post.title}}</h3>
-    <p class="content">{{post.content.slice(0, 50)}}...</p>
+    <p class="content">{{post.summary}}</p>
     <p class="date">
       <b>📅 {{printDate(post.creationDate)}}</b>
     </p>

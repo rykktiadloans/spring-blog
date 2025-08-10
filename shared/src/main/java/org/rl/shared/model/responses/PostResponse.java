@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
  * @param creationDate Creation/Publishing date of the post
  * @param state State of the post
  */
-public record PostResponse(Integer id, String title, String content, LocalDateTime creationDate, PostState state) implements Serializable {
+public record PostResponse(Integer id, String title, String content, String summary, LocalDateTime creationDate, PostState state) implements Serializable {
 
 }
