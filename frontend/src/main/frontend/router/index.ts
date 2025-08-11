@@ -5,6 +5,7 @@ import PostView from "../views/PostView.vue";
 import LoginView from "../views/LoginView.vue";
 import NewPostView from "../views/NewPostView.vue";
 import ErrorView from "../views/ErrorView.vue";
+import ResourcesView from "../views/ResourcesView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: "/owner/newpost",
       name: "newpost",
       component: NewPostView
+    },
+    {
+      path: "/owner/resources",
+      name: "resources",
+      component: ResourcesView
     },
     {
       path: "/err",

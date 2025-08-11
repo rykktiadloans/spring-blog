@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.rl.shared.model.responses.PostResponse;
 import org.rl.shared.model.PostState;
+import org.rl.shared.model.responses.SimplePostResponse;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -96,5 +97,13 @@ public class Post {
         return new PostResponse(
                 this.getId(), this.getTitle(), this.getContent(), this.getSummary(),
                 this.getCreationDate(), this.getState());
+    }
+
+    /**
+     * Create a {@link SimplePostResponse} based ont he contents of the post
+     * @return A corresponding simplified post response
+     */
+    public SimplePostResponse toSimpleResponse() {
+        return new SimplePostResponse(this.getId(), this.getTitle());
     }
 }

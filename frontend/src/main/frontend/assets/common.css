@@ -67,6 +67,12 @@
 
   --notif-bg: var(--dracula-selection);
 
+  --delete-bg: var(--dracula-red);
+  --delete-fg: var(--main-fg);
+
+  --delete-disable-bg: var(--dracula-selection);
+  --delete-disable-fg: var(--dracula-white);
+
 }
 
 * {

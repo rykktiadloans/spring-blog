@@ -14,7 +14,8 @@ import "../assets/common.css";
   border-radius: var(--card-border-radius);
   padding: 1em;
   transition: box-shadow var(--card-hover-timing) ease-out,
-    background-color var(--card-hover-timing) ease-out;
+    background-color var(--card-hover-timing) ease-out,
+    max-height var(--loading-timing) ease-out;
 }
 
 .card:hover {

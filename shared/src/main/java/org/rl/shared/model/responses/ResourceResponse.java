@@ -1,5 +1,7 @@
 package org.rl.shared.model.responses;
 
+import java.util.List;
+
 /**
  * Record with data about a resource
  * @param id ID of the post
