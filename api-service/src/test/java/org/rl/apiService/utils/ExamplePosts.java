@@ -28,4 +28,15 @@ public class ExamplePosts {
                 .resources(new HashSet<>())
                 .build();
     }
+
+    public static Post buildExamplePost3() {
+        return Post.builder()
+                .title("Title")
+                .content("![alt](/resources/name.png)")
+                .summary("summarier")
+                .creationDate(LocalDateTime.of(2025, 1, 3, 12, 0, 5))
+                .state(PostState.PUBLISHED)
+                .resources(new HashSet<>())
+                .build();
+    }
 }

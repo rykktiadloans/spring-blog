@@ -1,8 +1,10 @@
 package org.rl.apiService.services;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rl.apiService.model.Post;
+import org.rl.apiService.model.Resource;
 import org.rl.apiService.repositories.PostRepository;
 import org.rl.apiService.utils.Comparators;
 import org.rl.apiService.utils.PostgreSqlTestContainer;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.rl.apiService.utils.ExamplePosts.*;
+import static org.rl.apiService.utils.ExampleResources.*;
 
 
 @SpringBootTest
@@ -30,6 +33,9 @@ public class PostServiceTest {
     @Autowired
     private PostRepository singleUsePostRepository;
 
+    @Autowired
+    private ResourceService resourceService;
+
     @BeforeEach
     void setup() {
         this.singleUsePostRepository.deleteAll();
@@ -39,6 +45,21 @@ public class PostServiceTest {
     void canSavePostsAtAll() {
         assertThatCode(() -> this.postService.save(buildExamplePost1()))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @Transactional
+    void canSaveWithResources() {
+        Resource resource = this.resourceService.save(buildExampleResource1());
+        Post post = this.postService.save(buildExamplePost3());
+
+        assertThat(post.getResources().size())
+                .isEqualTo(1);
+
+        assertThat(post.getResources().toArray()[0])
+                .usingRecursiveComparison()
+                .ignoringFields(Resource.Fields.posts)
+                .isEqualTo(resource);
     }
 
     @Test
