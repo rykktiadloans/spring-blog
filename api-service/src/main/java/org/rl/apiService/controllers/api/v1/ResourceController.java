@@ -74,6 +74,7 @@ public class ResourceController {
      * @param file The file to save
      * @return The new resource
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "")
     @Operation(summary = "Create a new resource based on a file. *Requires Authorization*")
     @SecurityRequirement(name = "Bearer Authentication")

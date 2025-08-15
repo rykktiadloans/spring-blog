@@ -65,7 +65,7 @@ public class PostControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(postRequest)));
 
-        String content = resultActions.andExpect(MockMvcResultMatchers.status().isOk())
+        String content = resultActions.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn().getResponse().getContentAsString();
 
         PostResponse postResponse = this.objectMapper.readValue(content, PostResponse.class);

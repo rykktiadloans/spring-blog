@@ -93,6 +93,7 @@ public class PostController {
      * @param postDto A valid Post DTO
      * @return The new post
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @Caching(evict = {
             @CacheEvict(value = "postsCache", allEntries = true),
             @CacheEvict(value = "anyPostsCache", allEntries = true)
