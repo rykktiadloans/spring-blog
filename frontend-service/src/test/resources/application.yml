@@ -1,0 +1,6 @@
+logging:
+  level:
+    root: DEBUG
+
+services:
+  api: Why is it here again?

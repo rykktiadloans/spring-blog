@@ -85,4 +85,6 @@ OpenAPI reference can be obtained from a server at `/api/v1/swagger-ui`.
 - [x] Add OpenAPI
 - [x] Refix the "Not Found" issue
 - [x] Add summaries to posts
-- [ ] Add more tests
+- [x] Add more tests
+- [ ] Refactor stubFor definitions into a separate functions and add host semantics
+- [ ] Add comments
