@@ -37,13 +37,9 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class GatewayConfig {
-    @Value("${services.api}")
-    private String apiUrl;
-    @Value("${services.frontend}")
-    private String frontendUrl;
-    @Value("${services.auth}")
-    private String authUrl;
 
+    @Autowired
+    private ServicesConfig servicesConfig;
     @Autowired
     private SecurityFilter securityFilter;
 
@@ -56,45 +52,45 @@ public class GatewayConfig {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(route -> route.path("/api/v1/auth/login")
-                        .uri(authUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/api/v1/auth/expiration")
                         .filters(filter -> filter.filter(securityFilter))
-                        .uri(authUrl))
+                        .uri(this.servicesConfig.getAuthUrl()))
                 .route(route -> route.path("/api/v1/posts", "/api/v1/posts/**", "/api/v1/resources", "/api/v1/resources/list", "/api/v1/resources/**")
                         .and()
                         .method(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE)
                         .filters(filter -> filter.filter(securityFilter))
-                        .uri(apiUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/api/v1/posts", "/api/v1/posts/**", "/api/v1/resources", "/api/v1/resources/**", "/api/v1/rss")
                         .and()
                         .method(HttpMethod.GET)
-                        .uri(apiUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/rss")
                         .filters(filter -> filter.prefixPath("/api/v1"))
-                        .uri(apiUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/resources/**")
                         .and()
                         .method(HttpMethod.GET, HttpMethod.TRACE, HttpMethod.HEAD)
                         .filters(filter -> filter
                                 .prefixPath("/api/v1")
                         )
-                        .uri(apiUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/", "/posts", "/posts/**", "/assets/**", "/favicon.ico", "/owner/login", "/404")
-                        .uri(frontendUrl))
+                        .uri(this.servicesConfig.getFrontendUrl()))
                 .route(route -> route.path("/owner/newpost")
                         .filters(filter -> filter.filter(securityFilter))
-                        .uri(frontendUrl))
+                        .uri(this.servicesConfig.getFrontendUrl()))
                 .route(route -> route.path("/api/v3/**")
                         .filters(filter -> filter.stripPrefix(1))
-                        .uri(apiUrl))
+                        .uri(this.servicesConfig.getApiUrl()))
                 .route(route -> route.path("/auth/v3/**")
                         .filters(filter -> filter.stripPrefix(1))
-                        .uri(authUrl))
+                        .uri(this.servicesConfig.getAuthUrl()))
                 .route(route -> route.path("/frontend/v3/**")
                         .filters(filter -> filter.stripPrefix(1))
-                        .uri(frontendUrl))
+                        .uri(this.servicesConfig.getFrontendUrl()))
                 .route(route -> route.path("/err")
-                        .uri(frontendUrl))
+                        .uri(this.servicesConfig.getFrontendUrl()))
                 .build();
     }
 

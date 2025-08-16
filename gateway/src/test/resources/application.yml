@@ -1,0 +1,12 @@
+logging:
+  level:
+    root: DEBUG
+
+server:
+  error:
+    include-stacktrace: always
+
+services:
+  api: http://api-service:8081
+  frontend: http://frontend-service:8082
+  auth: http://auth-service:8083

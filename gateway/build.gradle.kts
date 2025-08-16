@@ -23,6 +23,7 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-gateway-server-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-mustache")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
