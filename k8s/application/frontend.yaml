@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: frontend-service
-      image: ghcr.io/rykktiadloans/blog-frontend-service:v0.0.1-snapshot-5
+      image: ghcr.io/rykktiadloans/blog-frontend-service:v1.0.0
       ports:
         - containerPort: 8082
       env:

@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: gateway-service
-      image: ghcr.io/rykktiadloans/blog-gateway:v0.0.1-snapshot-5
+      image: ghcr.io/rykktiadloans/blog-gateway:v1.0.0
       ports:
         - containerPort: 8080
       env:

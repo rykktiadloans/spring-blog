@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: api-service
-      image: ghcr.io/rykktiadloans/blog-api-service:v0.0.1-snapshot-5
+      image: ghcr.io/rykktiadloans/blog-api-service:v1.0.0
       ports:
         - containerPort: 8081
       env:

@@ -9,6 +9,6 @@ data:
   AUTH_URL: http://auth-service:8083
   FRONTEND_URL: http://frontend-service:8082
   VALKEY: valkey-service
-  LOGGING_LEVEL: WARN
+  LOGGING_LEVEL: INFO
   DEVTOOLS: "false"
 
