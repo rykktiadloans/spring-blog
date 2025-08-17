@@ -1,10 +1,6 @@
 package org.rl.gateway.route;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.tomakehurst.wiremock.matching.ContentPattern;
-import com.github.tomakehurst.wiremock.matching.StringValuePattern;
-import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,23 +8,18 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rl.gateway.clients.AuthClient;
 import org.rl.gateway.config.ServicesConfig;
-import org.rl.shared.model.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Mono;
 import wiremock.org.apache.hc.core5.http.HttpHeaders;
 import wiremock.org.apache.hc.core5.http.HttpStatus;
-
-import java.time.Duration;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.mockito.Mockito.when;
@@ -40,7 +31,7 @@ import static org.mockito.Mockito.when;
 @AutoConfigureWireMock(port = 0)
 @AutoConfigureWebTestClient
 @ExtendWith(MockitoExtension.class)
-public class RouteTests {
+public class ApiRouteTests {
     @Autowired
     private WebTestClient webTestClient;
 
@@ -58,9 +49,6 @@ public class RouteTests {
         public RouteTestsConfig(@Value("${wiremock.server.port}") int wiremockPort,
                 ServicesConfig servicesConfig) {
             servicesConfig.setApiUrl("http://localhost:" + wiremockPort);
-            servicesConfig.setAuthUrl("http://localhost:" + wiremockPort);
-            servicesConfig.setFrontendUrl("http://localhost:" + wiremockPort);
-
         }
     }
 
@@ -76,56 +64,7 @@ public class RouteTests {
                 });
     }
 
-    @Test
-    public void canLogin() throws JsonProcessingException {
-        UserRequest user = new UserRequest("username", "password");
-        String userSerialized = this.objectMapper.writeValueAsString(user);
-        stubFor(post(urlEqualTo("/api/v1/auth/login"))
-                .withRequestBody(containing(userSerialized))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
-                        .withStatus(HttpStatus.SC_OK))
-        );
 
-        this.webTestClient.post()
-                .uri("/api/v1/auth/login")
-                .accept(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(userSerialized))
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetExpiration() {
-        stubFor(post(urlMatching("/api/v1/auth/expiration.*"))
-                .withQueryParam("token", equalTo("sample.token"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
-                        .withStatus(HttpStatus.SC_OK))
-        );
-
-        this.webTestClient.post()
-                .uri("/api/v1/auth/expiration?token=sample.token")
-                .header("Authorization", "Bearer sample.token")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk();
-    }
-    @Test
-    public void gettingExpirationErrorsOnUnauthorized() {
-        stubFor(post(urlMatching("/api/v1/auth/expiration.*"))
-                .withQueryParam("token", equalTo("sample.token"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
-                        .withStatus(HttpStatus.SC_OK))
-        );
-
-        this.webTestClient.post()
-                .uri("/api/v1/auth/expiration?token=sample.token")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isUnauthorized();
-    }
 
     @Test
     public void canGetListOfPosts() {
@@ -415,145 +354,6 @@ public class RouteTests {
                 .expectStatus().isOk();
     }
 
-    @Test
-    public void canGetHome() {
-        stubFor(get(urlEqualTo("/"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetPostsList() {
-        stubFor(get(urlEqualTo("/posts"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/posts")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetPostPage() {
-        stubFor(get(urlMatching("/posts/.*"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/posts/54")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetFrontendAsset() {
-        stubFor(get(urlMatching("/assets/.*"))
-                .willReturn(aResponse()
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/assets/pictureframe.png")
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetLoginPage() {
-        stubFor(get(urlMatching("/owner/login"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/owner/login")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetNewpostPage() {
-        stubFor(get(urlMatching("/owner/newpost"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/owner/newpost")
-                .header("Authorization", "Bearer token")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void errorGetNewpostPageWhenUnauthorized() {
-        stubFor(get(urlMatching("/owner/newpost"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/owner/newpost")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isUnauthorized();
-    }
-
-    @Test
-    public void canGetResourcesPage() {
-        stubFor(get(urlMatching("/owner/resources"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/owner/resources")
-                .header("Authorization", "Bearer token")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void errorGetResourcesPageWhenUnauthorized() {
-        stubFor(get(urlMatching("/owner/resources"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/owner/resources")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isUnauthorized();
-    }
-
-    @Test
-    public void canGetErrorPage() {
-        stubFor(get(urlMatching("/err"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/err")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
 
     @Test
     public void canGetApiDocs() {
@@ -568,31 +368,5 @@ public class RouteTests {
                 .exchange()
                 .expectStatus().isOk();
     }
-    @Test
-    public void canGetAuthDocs() {
-        stubFor(get(urlEqualTo("v3"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
 
-        this.webTestClient.get()
-                .uri("/auth/v3")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
-
-    @Test
-    public void canGetFrontendDocs() {
-        stubFor(get(urlEqualTo("/v3"))
-                .willReturn(aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_HTML_VALUE)
-                        .withStatus(HttpStatus.SC_OK)));
-
-        this.webTestClient.get()
-                .uri("/frontend/v3")
-                .accept(MediaType.TEXT_HTML)
-                .exchange()
-                .expectStatus().isOk();
-    }
 }
