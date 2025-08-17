@@ -54,37 +54,8 @@ In order for the Docker Compose to run, the following environmental variables ne
 
 OpenAPI reference can be obtained from a server at `/api/v1/swagger-ui`.
 
-## To-do list
-- [x] Ability to post images
-- [x] Add centralized exception handlers
-- [x] Implement draft support
-- [x] Add proper image support
-- [x] Image presence verification
-- [x] Add proper pagination to Vue
-- [x] Refactor Vue a bit
-- [x] Proper structuring
-- [x] Add Javadoc
-- [x] Proper constraints
-- [x] Add ResourceResponse
-- [x] Refactor other stuff
-- [x] Add tests
-- [x] Added basic CI script
-- [x] Remove HTTPS from gateway and replace it with NGINX
-- [x] Add Kubernetes config
-- [x] Add the ability to set logging level and live reload with env variables.
-- [x] Add Error page
-- [x] Add Valkey caching
-- [x] Add rate limiter (Using NGINX ingress)
-- [x] Fix Vue duplicating requests
-- [x] Proper styling
-- [x] Add some actual content on the home page
-- [x] Add notification system to frontend
-- [x] Add RSS
-- [x] Add JSDoc
-- [x] Figure out how to do actuators
-- [x] Add OpenAPI
-- [x] Refix the "Not Found" issue
-- [x] Add summaries to posts
-- [x] Add more tests
-- [x] Add simulation of different hosts for gateway tests
+## Eventual to-do list
+- [ ] Actually deploy it somewhere
 - [ ] Add comments
+> **_NOTE:_** I'm pretty sure the only way to make commenting safe
+> and spam unprone is by making users supply their emails and then verify them.
