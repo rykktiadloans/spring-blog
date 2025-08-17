@@ -50,7 +50,7 @@ public class PostRepositoryTest {
 
         assertThat(post.get())
                 .usingRecursiveComparison()
-                .ignoringFields(Post.Fields.id)
+                .ignoringFields(Post.Fields.id, Post.Fields.resources)
                 .withEqualsForFields(Comparators.areEqual(), Post.Fields.creationDate)
                 .isEqualTo(example);
     }
@@ -63,7 +63,7 @@ public class PostRepositoryTest {
         List<Post> posts = this.postRepository.findAllByOrderByCreationDateDesc(Pageable.ofSize(5));
 
         assertThat(posts)
-                .usingRecursiveFieldByFieldElementComparatorOnFields()
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields(Post.Fields.resources)
                 .containsExactly(post2, post1);
     }
 
@@ -77,7 +77,7 @@ public class PostRepositoryTest {
                         Pageable.ofSize(5));
 
         assertThat(posts)
-                .usingRecursiveFieldByFieldElementComparatorOnFields()
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields(Post.Fields.resources)
                 .containsExactly(post1);
     }
 

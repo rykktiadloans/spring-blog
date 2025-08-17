@@ -1,5 +1,6 @@
 package org.rl.shared.model.responses;
 
+import lombok.experimental.FieldNameConstants;
 import org.rl.shared.model.PostState;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * @param creationDate Creation/Publishing date of the post
  * @param state State of the post
  */
-public record PostResponse(Integer id, String title, String content, LocalDateTime creationDate, PostState state) implements Serializable {
+@FieldNameConstants
+public record PostResponse(Integer id, String title, String content, String summary, LocalDateTime creationDate, PostState state) implements Serializable {
 
 }

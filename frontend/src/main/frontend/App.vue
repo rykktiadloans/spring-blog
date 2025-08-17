@@ -16,6 +16,7 @@ const repositories = useRepositoriesStore();
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/posts">Posts</RouterLink>
         <RouterLink to="/owner/newpost" v-if="repositories.user != null">New Post</RouterLink>
+        <RouterLink to="/owner/resources" v-if="repositories.user != null">Resources</RouterLink>
         <a href="/rss" class="rss">
           <img :src="rssIcon" alt="RSS">
         </a>

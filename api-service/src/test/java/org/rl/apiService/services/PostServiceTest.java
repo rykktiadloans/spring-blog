@@ -1,8 +1,10 @@
 package org.rl.apiService.services;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.rl.apiService.model.Post;
+import org.rl.apiService.model.Resource;
 import org.rl.apiService.repositories.PostRepository;
 import org.rl.apiService.utils.Comparators;
 import org.rl.apiService.utils.PostgreSqlTestContainer;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.rl.apiService.utils.ExamplePosts.*;
+import static org.rl.apiService.utils.ExampleResources.*;
 
 
 @SpringBootTest
@@ -29,6 +32,9 @@ public class PostServiceTest {
 
     @Autowired
     private PostRepository singleUsePostRepository;
+
+    @Autowired
+    private ResourceService resourceService;
 
     @BeforeEach
     void setup() {
@@ -42,6 +48,21 @@ public class PostServiceTest {
     }
 
     @Test
+    @Transactional
+    void canSaveWithResources() {
+        Resource resource = this.resourceService.save(buildExampleResource1());
+        Post post = this.postService.save(buildExamplePost3());
+
+        assertThat(post.getResources().size())
+                .isEqualTo(1);
+
+        assertThat(post.getResources().toArray()[0])
+                .usingRecursiveComparison()
+                .ignoringFields(Resource.Fields.posts)
+                .isEqualTo(resource);
+    }
+
+    @Test
     void canFetchPostById() {
         Post example = buildExamplePost1();
         example = this.postService.save(example);
@@ -50,7 +71,7 @@ public class PostServiceTest {
 
         assertThat(post)
                 .usingRecursiveComparison()
-                .ignoringFields(Post.Fields.id)
+                .ignoringFields(Post.Fields.id, Post.Fields.resources)
                 .withEqualsForFields(Comparators.areEqual(), Post.Fields.creationDate)
                 .isEqualTo(example);
     }
@@ -62,7 +83,7 @@ public class PostServiceTest {
 
         List<Post> posts = this.postService.getByPage(Pageable.ofSize(5));
         assertThat(posts)
-                .usingRecursiveFieldByFieldElementComparatorOnFields()
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields(Post.Fields.resources)
                 .containsExactly(post2, post1);
     }
 
@@ -77,7 +98,7 @@ public class PostServiceTest {
                         Pageable.ofSize(5));
 
         assertThat(posts)
-                .usingRecursiveFieldByFieldElementComparatorOnFields()
+                .usingRecursiveFieldByFieldElementComparatorIgnoringFields(Post.Fields.resources)
                 .containsExactly(post1);
     }
 
@@ -95,7 +116,7 @@ public class PostServiceTest {
 
         assertThat(post)
                 .usingRecursiveComparison()
-                .ignoringFields(Post.Fields.id)
+                .ignoringFields(Post.Fields.id, Post.Fields.resources)
                 .withEqualsForFields(Comparators.areEqual(), Post.Fields.creationDate)
                 .isEqualTo(example);
     }

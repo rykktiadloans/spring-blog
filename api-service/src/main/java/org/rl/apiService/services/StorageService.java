@@ -3,6 +3,7 @@ package org.rl.apiService.services;
 import jakarta.annotation.PostConstruct;
 import org.rl.apiService.configuration.StorageConfiguration;
 import org.rl.apiService.model.Resource;
+import org.rl.apiService.repositories.PostRepository;
 import org.rl.shared.exceptions.StorageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class StorageService {
     @Autowired
     private StorageConfiguration storageConfiguration;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @PostConstruct
     private void init() {
         try {
@@ -30,6 +34,7 @@ public class StorageService {
                     String.format("Could not create directory at `%s`", this.storageConfiguration.getLocation())
                     , e);
         }
+
     }
 
     /**

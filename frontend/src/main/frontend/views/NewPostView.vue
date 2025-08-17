@@ -54,6 +54,8 @@ const content = ref(`
 
 As you can see, this thing supports Markdown.
 `);
+const summary = ref("");
+
 const badImages: Ref<string[]> = ref([]);
 const fileInput = useTemplateRef("fileInput");
 const errors: Ref<string[]> = ref([]);
@@ -66,11 +68,12 @@ onMounted(async () => {
     const post = await repositories.postRepository.fetchPostById(id.value);
     title.value = post.title;
     content.value = post.content;
+    summary.value = post.summary;
   }
 });
 
 const post = computed(
-  () => new Post(id.value, title.value, content.value, new Date(Date.now()), "DRAFT"),
+  () => new Post(id.value, title.value, content.value, summary.value, new Date(Date.now()), "DRAFT"),
 );
 
 const validateImages = async () => {
@@ -90,6 +93,9 @@ const validateInput = async () => {
   }
   if(content.value.length > 8192) {
     errors.value.push("Content section is too long. Max length is 8192");
+  }
+  if(summary.value.length > 50) {
+    errors.value.push("Summary is too long. Max length is 50")
   }
 };
 
@@ -131,7 +137,7 @@ const onPublishClick = async () => {
     return;
   }
   const newPost = await repositories.postRepository.sendPost(
-    new Post(id.value, title.value, content.value, new Date(Date.now()), "PUBLISHED"),
+    new Post(id.value, title.value, content.value, summary.value, new Date(Date.now()), "PUBLISHED"),
   );
   if (newPost != null) {
     router.push(`/posts/${newPost.id}`);
@@ -144,7 +150,7 @@ const onDraftClick = async () => {
     return;
   }
   const newPost = await repositories.postRepository.sendPost(
-    new Post(id.value, title.value, content.value, new Date(Date.now()), "DRAFT"),
+    new Post(id.value, title.value, content.value, summary.value, new Date(Date.now()), "DRAFT"),
   );
   if(newPost != null) {
     router.push(`/posts/${newPost.id}`);
@@ -159,6 +165,12 @@ const onDraftClick = async () => {
         <label for="title">Title</label>
         <input v-model="title" type="text" name="title" id="title" />
       </div>
+
+      <div class="form-item">
+        <label for="summary">Summary</label>
+        <input v-model="summary" type="text" name="summary" id="summary" />
+      </div>
+
       <div class="form-item">
         <label for="content">Content</label>
         <textarea v-model="content" rows="10" name="content" id="content"> </textarea>

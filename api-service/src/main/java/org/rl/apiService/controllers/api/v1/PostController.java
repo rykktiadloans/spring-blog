@@ -93,6 +93,7 @@ public class PostController {
      * @param postDto A valid Post DTO
      * @return The new post
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @Caching(evict = {
             @CacheEvict(value = "postsCache", allEntries = true),
             @CacheEvict(value = "anyPostsCache", allEntries = true)
@@ -104,6 +105,7 @@ public class PostController {
         Post post = Post.builder()
                 .title(postDto.title())
                 .content(postDto.content())
+                .summary(postDto.summary())
                 .creationDate(LocalDateTime.now())
                 .state(postDto.state())
                 .build();
@@ -132,6 +134,7 @@ public class PostController {
         Post post = this.postService.getById(postDto.id());
         post.setTitle(postDto.title());
         post.setContent(postDto.content());
+        post.setSummary(postDto.summary());
         post.setState(postDto.state());
         if(postDto.state() == PostState.PUBLISHED && post.getState() == PostState.DRAFT) {
             post.setCreationDate(LocalDateTime.now());

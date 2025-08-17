@@ -31,4 +31,14 @@ public class OwnerController {
     public String getNewPost() {
         return "forward:/index.html";
     }
+
+    /**
+     * Return the page with the resources view
+     * @return Page with resources
+     */
+    @GetMapping("/owner/resources")
+    @Operation(summary = "Returns the frontend")
+    public String getResourcesPage() {
+        return "forward:/index.html";
+    }
 }

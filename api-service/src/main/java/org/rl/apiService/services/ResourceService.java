@@ -4,12 +4,16 @@ import org.rl.apiService.configuration.StorageConfiguration;
 import org.rl.apiService.model.Resource;
 import org.rl.apiService.repositories.ResourceRepository;
 import org.rl.shared.exceptions.MissingEntityException;
+import org.rl.shared.model.responses.SimplePostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -65,6 +69,10 @@ public class ResourceService {
         return this.storageService.getFile(resource);
     }
 
+    public List<Resource> getByPage(Pageable pageable) {
+        return this.resourceRepository.findAllByOrderByNameDesc(pageable);
+    }
+
     /**
      * Check whether the resource exists
      * @param filename Name of the file to check
@@ -101,5 +109,17 @@ public class ResourceService {
         Resource resource = this.storageService.store(file);
         return this.resourceRepository.save(resource);
 
+    }
+
+    /**
+     * Delete a resource and it's corresponding file
+     * @param resource Resource to delete
+     * @return True if the file is deleted, false otherwise
+     */
+    public boolean delete(Resource resource) {
+        File file = this.getFileFromResource(resource);
+        boolean res = file.delete();
+        this.resourceRepository.delete(resource);
+        return res;
     }
 }
