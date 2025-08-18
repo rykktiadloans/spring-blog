@@ -34,21 +34,21 @@ Docker containers for specific microservices are also publicly available in the 
 
 In order for the Docker Compose to run, the following environmental variables need to be set.
 
-| Environmental Variable | Example Value                                              | Purpose                                                        |
-|------------------------|------------------------------------------------------------|----------------------------------------------------------------|
-| DB_NAME                | `postgres`                                                 | Name of the PostreSQL database                                 |
-| DB_USER                | `admin`                                                    | Database username                                              |
-| DB_PASSWORD            | `generic-password`                                         | Password for the database user                                 |
-| DB_URL                 | `jdbc:postgresql://database:5432/blog`                     | URL of the database with extra info for JDBC                   |
-| OWNER_NAME             | `Owner`                                                    | Name of the page owner (yourself). Needed for logging in       |
-| OWNER_PASSWORD         | `password-generic`                                         | Password the the owner account                                 |
-| JWT_SECRET             | `SomeReallyLongPhraseForSecurityReasonsLikeReallyDamnLong` | Secret phrase used for generating JWT tokens. Needs to be long |
-| JWT_EXPIRATION         | `86400000`                                                 | An amount of time a JWT token is valid in milliseconds         |
-| KEY_STORE              | `/app/certificate/keystore.p12`                            | Key store for HTTPS                                            |
-| KEY_PASSWORD           | `keystore-password`                                        | Password to the keystore                                       |
-| KEY_ALIAS              | `certification`                                            | Key store alias                                                |
-| LOGGING_LEVEL          | `DEBUG`                                                    | Logging level of all applications                              | 
-| DEVTOOLS               | `true`                                                     | Turn on reload on file change for all applications             |
+| Environmental Variable | Example Value                          | Purpose                                                                      |
+|------------------------|----------------------------------------|------------------------------------------------------------------------------|
+| DB_NAME                | `postgres`                             | Name of the PostreSQL database                                               |
+| DB_USER                | `admin`                                | Database username                                                            |
+| DB_PASSWORD            | `generic-password`                     | Password for the database user                                               |
+| DB_URL                 | `jdbc:postgresql://database:5432/blog` | URL of the database with extra info for JDBC                                 |
+| OWNER_NAME             | `Owner`                                | Name of the page owner (yourself). Needed for logging in                     |
+| OWNER_PASSWORD         | `password-generic`                     | Password the the owner account                                               |
+| JWT_SECRET             | `abcdefghijklmnopqrstuvqwxyz123456`    | Secret phrase used for generating JWT tokens. Needs to be 32 characters long |
+| JWT_EXPIRATION         | `86400000`                             | An amount of time a JWT token is valid in milliseconds                       |
+| KEY_STORE              | `/app/certificate/keystore.p12`        | Key store for HTTPS                                                          |
+| KEY_PASSWORD           | `keystore-password`                    | Password to the keystore                                                     |
+| KEY_ALIAS              | `certification`                        | Key store alias                                                              |
+| LOGGING_LEVEL          | `DEBUG`                                | Logging level of all applications                                            | 
+| DEVTOOLS               | `true`                                 | Turn on reload on file change for all applications                           |
 
 ## API Reference
 

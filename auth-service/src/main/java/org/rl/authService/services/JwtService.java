@@ -1,6 +1,7 @@
 package org.rl.authService.services;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.AeadAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecureDigestAlgorithm;
 import io.jsonwebtoken.security.SecurityException;
@@ -44,7 +45,7 @@ public class JwtService {
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(new Date(new Date().getTime() + this.jwtExpirationMs))
-                .signWith(this.key)
+                .encryptWith(this.key, Jwts.ENC.A128CBC_HS256)
                 .compact();
     }
 
@@ -55,8 +56,9 @@ public class JwtService {
      */
     public String getUsernameFromToken(String token) {
         return Jwts.parser()
-                .verifyWith(key).build()
-                .parseSignedClaims(token)
+                .decryptWith(this.key)
+                .build()
+                .parseEncryptedClaims(token)
                 .getPayload()
                 .getSubject();
     }
@@ -68,8 +70,8 @@ public class JwtService {
      */
     public Date getExpirationFromToken(String token) {
         return Jwts.parser()
-                .verifyWith(key).build()
-                .parseSignedClaims(token)
+                .decryptWith(key).build()
+                .parseEncryptedClaims(token)
                 .getPayload()
                 .getExpiration();
     }
@@ -82,7 +84,7 @@ public class JwtService {
     public boolean validateJwtToken(String token) {
         this.logger.debug("AuthService: " + token);
         try {
-            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+            Jwts.parser().decryptWith(this.key).build().parseEncryptedClaims(token);
             return true;
         }
         catch (SecurityException e) {

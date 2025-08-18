@@ -1,5 +1,5 @@
 jwt:
-  secret: genericsecretphraseofsomekindyouknowhowitisusually
+  secret: KR95kY2LpwM1BrpmtZUhDlX8CDrBaYUa
   expiration: 1000000
 
 owner:
