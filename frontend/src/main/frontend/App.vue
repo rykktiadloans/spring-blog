@@ -38,7 +38,7 @@ const repositories = useRepositoriesStore();
   flex-flow: row nowrap;
   align-items: center;
   gap: 1.5em;
-  padding: 10px;
+  padding: 0px 10px;
   height: 2em;
   background-color: var(--header-bg);
 }
@@ -46,7 +46,9 @@ const repositories = useRepositoriesStore();
 nav {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
   width: 100%;
+  height: 100%;
   gap: 0.5em;
 }
 
@@ -59,6 +61,10 @@ nav {
 }
 
 .title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 100%;
   color: var(--header-fg);
 }
 
