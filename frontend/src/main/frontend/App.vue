@@ -49,7 +49,7 @@ nav {
   align-items: center;
   width: 100%;
   height: 100%;
-  gap: 0.5em;
+  gap: 0.8em;
 }
 
 .rss {
