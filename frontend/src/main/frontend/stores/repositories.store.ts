@@ -44,6 +44,21 @@ export const useRepositoriesStore = defineStore("repositories", () => {
     jwtToken.value = tempToken;
     user.value = new User(credentials.username, credentials.password, UserRole.OWNER);
 
+    const expiration: string = await fetch(`/api/v1/auth/expiration?token=${jwtToken.value}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${jwtToken.value}`,
+      },
+    }).then((response) => response.json());
+
+    const expirationDate = new Date(expiration);
+    const timeOut = expirationDate.getTime() - Date.now();
+
+    setTimeout(() => {
+      console.log("Relogging!");
+      login(credentials);
+    }, timeOut);
+
     return user.value;
   };
 
